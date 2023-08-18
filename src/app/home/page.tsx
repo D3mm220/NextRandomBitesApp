@@ -51,8 +51,8 @@ const Home = () => {
   useEffect(() => {
     const bringPhoto = async() => {
       const data = await getPlacePhoto(currentPhoto)
-      const blob = await data.Blob()
-      setFetchedPhoto(URL.createObjectURL(blob));
+      setFetchedPhoto(data)
+      console.log(data)
     }
     bringPhoto()
   },[index, currentPhoto])
@@ -74,7 +74,7 @@ const Home = () => {
         <div>
           <h2 className="text-green-800">Lugar: {currentPlace.name}</h2>
           <p className="text-blue-800">Direccion: {currentPlaceId.formatted_address}</p>
-          <Image src={fetchedPhoto} alt={fetchedPhoto} />
+          <Image src={fetchedPhoto} alt={fetchedPhoto} width={400} height={400}/>
           {
             index > 0 ? <button onClick={handleAnterior} className="bg-pink-400 rounded">Anterior</button> : <button disabled className="bg-stone-400 rounded">Anterior</button>
           }

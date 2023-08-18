@@ -17,9 +17,9 @@ export const getDataPlaceId = async (currentId: string): Promise<typesPlaceId> =
 
 export const getPlacePhoto = async (photoReference: string): Promise<any> => {
         console.log(photoReference);
-        const apiPlacePhoto = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${process.env.NEXT_PUBLIC_API_KEY}`
+        const apiPlacePhoto = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AUacShjy-U02H-0ClbaI6WT12LNMg0mrJLWOnkXntwm-TWrmgMNmBAJFO4e3tan1RCJrU0G4Hc1lUicfm1WCkuIqLAVX_Aqn20ZZlfOn_Q2u36Xdgvx1NF9xSUkPLIEkpZGwKkmLHHNjIXX4b4twXtrT7XyH6pz7NyCOEpE-z8_9gvGj-Lis&key=${process.env.NEXT_PUBLIC_API_KEY}`
         const response = await fetch(apiPlacePhoto)
         console.log(response)
-        const data = await response.blob()
+        const data = await response.url
         return await data;
 }
