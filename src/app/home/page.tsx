@@ -36,7 +36,7 @@ const Home = () => {
       setCurrentPlace(places[index])
       setCurrentId(places[index].place_id)
     }  
-  },[index])
+  },[index,places])
 
   useEffect(() => {
     const bringPLaceId = async () => {
@@ -52,9 +52,9 @@ const Home = () => {
     const bringPhoto = async() => {
       const data = await getPlacePhoto(currentPhoto)
       setFetchedPhoto(data)
-      console.log(data)
     }
-    bringPhoto()
+    currentPhoto !== "" && bringPhoto()
+  
   },[index, currentPhoto])
 
   const handleAnterior = () => {
@@ -65,6 +65,14 @@ const Home = () => {
     index < 10 && setIndex(index + 1);
   }
 
+  console.log(places)
+  console.log(currentPlace)
+  console.log(currentId)
+  console.log(currentPlaceId)
+  console.log(photos)
+  console.log(currentPhoto)
+  console.log(fetchedPhoto)
+  
 
   return (
     <div>
@@ -74,7 +82,10 @@ const Home = () => {
         <div>
           <h2 className="text-green-800">Lugar: {currentPlace.name}</h2>
           <p className="text-blue-800">Direccion: {currentPlaceId.formatted_address}</p>
-          <Image src={fetchedPhoto} alt={fetchedPhoto} width={400} height={400}/>
+          {
+            fetchedPhoto &&
+            <Image src={fetchedPhoto} alt={fetchedPhoto} width={400} height={400}/>
+          }
           {
             index > 0 ? <button onClick={handleAnterior} className="bg-pink-400 rounded">Anterior</button> : <button disabled className="bg-stone-400 rounded">Anterior</button>
           }
