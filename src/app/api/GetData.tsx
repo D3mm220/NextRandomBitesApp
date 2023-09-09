@@ -1,8 +1,22 @@
 import { typesPlaceId } from "../types/typesPlaceId";
 import { typesPlaces } from "../types/typesPlaces";
+import { Location, typesGeolocation } from "../types/typesGeolocation";
 
-export const getDataNearbySearch = async (): Promise<typesPlaces> => {
-    const apiNearbySearch = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${process.env.NEXT_PUBLIC_API_KEY}&location=-34.6167431,-58.3767212&radius=10&keyword=bar`
+
+export const getLocation = async (): Promise<Location> => {
+    const apiLocation = `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_API_KEY}`
+    const response = await fetch(apiLocation, {
+        method: 'POST'
+    })
+    console.log(response)
+    const data : typesGeolocation = await response.json()
+    console.log("getLocation: "+data)
+    return data.location
+}
+
+export const getDataNearbySearch = async (coords: Location): Promise<any> => {
+    const apiNearbySearch = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${process.env.NEXT_PUBLIC_API_KEY}&location=${coords.lat},${coords.lng}&radius=10&keyword=bar`
+    //location=-34.6167431,-58.3767212
     const response = await fetch(apiNearbySearch)
     const data = await response.json();
     return data;

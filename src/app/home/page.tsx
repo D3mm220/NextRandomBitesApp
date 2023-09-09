@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 
-import { getDataNearbySearch, getDataPlaceId, getPlacePhoto } from "../api/GetData";
+import { getDataNearbySearch, getDataPlaceId, getPlacePhoto, getLocation } from "../api/GetData";
 import { typesResult } from "../types/typesPlaces";
 import { Photo, placeIdResult } from "../types/typesPlaceId";
 import Image from "next/image";
+import { Location } from "../types/typesGeolocation";
 
 const Home = () => {
 
@@ -19,17 +20,31 @@ const Home = () => {
   const [ photos, setPhotos] = useState<Photo[]>([])
   const [ currentPhoto, setCurrentPhoto] = useState<string>("")
   const [ fetchedPhoto, setFetchedPhoto] = useState<string>("")
+  const [ location, setLocation] = useState<Location>()
   
   useEffect(() => {
+    const bringLocation = async() => {
+      const data = await getLocation()
+      setLocation(data)
+      console.log(data) 
+    }
+    bringLocation()
+  },[ ])
+
+
+  useEffect(() => {
+    if (location !== undefined) {
       const bringNearbySearch = async () => { 
-        const data = await getDataNearbySearch()
+        const data = await getDataNearbySearch(location)
         setPlaces(data.results)
+        console.log("BRINGNEARBY: "+location)
+        console.log(data.results)
         setCurrentPlace(data.results[0])
         setCurrentId(data.results[0].place_id)
       }
       bringNearbySearch();
-  },[])
-
+    }
+  },[location])
 
   useEffect(() => {
     if (places.length > 0) {
@@ -64,15 +79,6 @@ const Home = () => {
   const handleSiguiente = () => {
     index < 10 && setIndex(index + 1);
   }
-
-  console.log(places)
-  console.log(currentPlace)
-  console.log(currentId)
-  console.log(currentPlaceId)
-  console.log(photos)
-  console.log(currentPhoto)
-  console.log(fetchedPhoto)
-  
 
   return (
     <div>
