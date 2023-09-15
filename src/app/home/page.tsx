@@ -7,6 +7,7 @@ import { typesResult } from "../types/typesPlaces";
 import { Photo, placeIdResult } from "../types/typesPlaceId";
 import Image from "next/image";
 import { Location } from "../types/typesGeolocation";
+import Link from "next/link";
 
 const Home = () => {
 
@@ -82,6 +83,8 @@ const Home = () => {
 
   return (
     <div>
+      <Link href="/">Go to /</Link>
+
       <h2 className="bg-stone-500">Search Page</h2>
       {
         currentPlace && currentPlaceId &&
