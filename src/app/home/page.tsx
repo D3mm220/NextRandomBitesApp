@@ -1,27 +1,25 @@
 "use client"
 
 import { useState, useEffect } from "react";
-
-import { getDataNearbySearch, getDataPlaceId, getPlacePhoto, getLocation } from "../api/GetData";
-import { typesResult } from "../types/typesPlaces";
-import { Photo, placeIdResult } from "../types/typesPlaceId";
+import { getDataNearbySearch, getDataPlaceId, getPlacePhoto, getLocation } from "@/src/app/api/GetData";
+import { typesResult } from "@/src/types/typesPlaces";
+import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
 import Image from "next/image";
-import { Location } from "../types/typesGeolocation";
+import { Location } from "@/src/types/typesGeolocation";
 import Link from "next/link";
 
 const Home = () => {
-
   // typesPlaces Array
   // Array{typesPlaces} other form
-  const [ places, setPlaces ] = useState<typesResult[]>([]) // Array of places
-  const [ currentPlace, setCurrentPlace ] = useState<typesResult>(); // Object of current place
-  const [ index, setIndex ] = useState<number>(0); // Int helper for iteration of current place
-  const [ currentId, setCurrentId ] = useState<string>("") // ID OF CURRENT PLACE
+  const [ places, setPlaces ] = useState<typesResult[]>([]) // Array de los lugares que devuelve getDataNearbySearch
+  const [ currentPlace, setCurrentPlace ] = useState<typesResult>(); // Objecto del CurrentPlace, parte del array de places
+  const [ index, setIndex ] = useState<number>(0); // Integer helper para la iteration del CurrentPlace
+  const [ currentId, setCurrentId ] = useState<string>("") // ID del CurrentPlace
   const [ currentPlaceId, setCurrentPlaceId ] = useState<placeIdResult>() // ARRAY OF PLACE ID
   const [ photos, setPhotos] = useState<Photo[]>([])
   const [ currentPhoto, setCurrentPhoto] = useState<string>("")
   const [ fetchedPhoto, setFetchedPhoto] = useState<string>("")
-  const [ location, setLocation] = useState<Location>()
+  const [ location, setLocation] = useState<Location>() // Coordenadas del usuario
   
   useEffect(() => {
     const bringLocation = async() => {
