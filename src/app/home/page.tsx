@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { getDataNearbySearch, getDataPlaceId, getPlacePhoto, getLocation } from "@/src/app/api/GetData";
 import { typesResult } from "@/src/types/typesPlaces";
 import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
-import { Cardaaa } from "@/src/components/Cardaaa";
 import { Location } from "@/src/types/typesGeolocation";
 import Link from "next/link";
+import { Card } from "@/src/components/Card";
 
 const Home = () => {
   // typesPlaces Array
@@ -80,13 +80,10 @@ const Home = () => {
   }
 
   return (
-    <div>
-      <Link href="/">Go to /</Link>
-
-      <h2 className="bg-stone-500">Search Page</h2>
+    <div className="bg-[#E8F9FD] max-h-screen">
       {
         currentPlace && currentPlaceId &&
-        <Cardaaa currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleAnterior={handleAnterior} handleSiguiente={handleSiguiente} />
+        <Card currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleAnterior={handleAnterior} handleSiguiente={handleSiguiente} />
       }
     </div>
   )
