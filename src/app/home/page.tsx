@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getDataNearbySearch, getDataPlaceId, getPlacePhoto, getLocation } from "@/src/app/api/GetData";
 import { typesResult } from "@/src/types/typesPlaces";
 import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
-import Image from "next/image";
+import { Cardaaa } from "@/src/components/Cardaaa";
 import { Location } from "@/src/types/typesGeolocation";
 import Link from "next/link";
 
@@ -86,21 +86,7 @@ const Home = () => {
       <h2 className="bg-stone-500">Search Page</h2>
       {
         currentPlace && currentPlaceId &&
-        <div>
-          <h2 className="text-green-800">Lugar: {currentPlace.name}</h2>
-          <p className="text-blue-800">Direccion: {currentPlaceId.formatted_address}</p>
-          {
-            fetchedPhoto &&
-            <Image src={fetchedPhoto} alt={fetchedPhoto} width={400} height={400}/>
-          }
-          {
-            index > 0 ? <button onClick={handleAnterior} className="bg-pink-400 rounded">Anterior</button> : <button disabled className="bg-stone-400 rounded">Anterior</button>
-          }
-          {
-            index < 10 ? <button onClick={handleSiguiente} className="bg-pink-400 rounded">Siguiente</button> : <button disabled className="bg-stone-400 rounded">Siguiente</button>
-          }
-        
-        </div>
+        <Cardaaa currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleAnterior={handleAnterior} handleSiguiente={handleSiguiente} />
       }
     </div>
   )
