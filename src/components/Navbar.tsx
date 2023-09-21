@@ -15,8 +15,9 @@ export const Navbar = () => {
                 </Image>
                 </Link>
             </div>
-            <div className='right-side'>
-                <Link href='/home' className='text-2xl'>Home</Link>
+            <div className='right-side flex gap-5'>
+                <Link href='/' className='text-2xl'>Home</Link>
+                <Link href='/find' className='text-2xl'>Find</Link>
             </div>
         </nav>
     )

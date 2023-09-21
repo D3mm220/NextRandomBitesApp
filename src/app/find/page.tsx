@@ -1,14 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { getDataNearbySearch, getDataPlaceId, getPlacePhoto, getLocation } from "@/src/app/api/GetData";
+import { getDataNearbySearch, getDataPlaceId, getPlacePhoto, getLocation } from "@/src/app/api/route";
 import { typesResult } from "@/src/types/typesPlaces";
 import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
 import { Location } from "@/src/types/typesGeolocation";
-import Link from "next/link";
 import { Card } from "@/src/components/Card";
 
-const Home = () => {
+const Find = () => {
   // typesPlaces Array
   // Array{typesPlaces} other form
   const [ places, setPlaces ] = useState<typesResult[]>([]) // Array de los lugares que devuelve getDataNearbySearch
@@ -16,40 +15,46 @@ const Home = () => {
   const [ index, setIndex ] = useState<number>(0); // Integer helper para la iteration del CurrentPlace
   const [ currentId, setCurrentId ] = useState<string>("") // ID del CurrentPlace
   const [ currentPlaceId, setCurrentPlaceId ] = useState<placeIdResult>() // ARRAY OF PLACE ID
-  const [ photos, setPhotos] = useState<Photo[]>([])
+  const [ photos, setPhotos] = useState<Photo[]>([]) // ARRAY OF Photos
+  const [ indexPhoto, setIndexPhoto] = useState<number>(0)
   const [ currentPhoto, setCurrentPhoto] = useState<string>("")
   const [ fetchedPhoto, setFetchedPhoto] = useState<string>("")
   const [ location, setLocation] = useState<Location>() // Coordenadas del usuario
   
+  console.log()
+
+  //trae las coordenadas
   useEffect(() => {
     const bringLocation = async() => {
-      const data = await getLocation()
-      setLocation(data)
-      console.log(data) 
+      const dataLocation = await getLocation()
+      setLocation(dataLocation)
+      console.log(dataLocation) 
     }
     bringLocation()
-  },[ ])
+  },[])
 
-
+  //Trae 
   useEffect(() => {
     if (location !== undefined) {
       const bringNearbySearch = async () => { 
-        const data = await getDataNearbySearch(location)
-        setPlaces(data.results)
-        console.log("BRINGNEARBY: "+location)
-        console.log(data.results)
-        setCurrentPlace(data.results[0])
-        setCurrentId(data.results[0].place_id)
+        const dataNearby = await getDataNearbySearch(location)
+        setPlaces(dataNearby.results)
+        setCurrentPlace(dataNearby.results[0])
+        setCurrentId(dataNearby.results[0].place_id)
       }
-      bringNearbySearch();
-    }
+      bringNearbySearch()
+      
+    };
   },[location])
+
+  console.log(places)
+  console.log(currentPlaceId)
 
   useEffect(() => {
     if (places.length > 0) {
       setCurrentPlace(places[index])
       setCurrentId(places[index].place_id)
-    }  
+    }
   },[index,places])
 
   useEffect(() => {
@@ -57,10 +62,11 @@ const Home = () => {
       const data = await getDataPlaceId(currentId);
       setCurrentPlaceId(data.result)
       setPhotos(data.result.photos)
+      console.log(photos)
       setCurrentPhoto(data.result.photos[0].photo_reference)
     }
     currentId !== "" && bringPLaceId()
-  },[index, currentId])
+  },[currentId])
 
   useEffect(() => {
     const bringPhoto = async() => {
@@ -68,25 +74,25 @@ const Home = () => {
       setFetchedPhoto(data)
     }
     currentPhoto !== "" && bringPhoto()
-  
-  },[index, currentPhoto])
+  },[currentPhoto])
 
-  const handleAnterior = () => {
+
+  const handleSiteAnterior = () => {
     index > 0 && setIndex(index - 1);
   }
 
-  const handleSiguiente = () => {
-    index < 10 && setIndex(index + 1);
+  const handleSiteSiguiente = () => {
+    index < (places.length-1) && setIndex(index + 1);
   }
 
   return (
     <div className="bg-[#E8F9FD] max-h-screen">
       {
         currentPlace && currentPlaceId &&
-        <Card currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleAnterior={handleAnterior} handleSiguiente={handleSiguiente} />
+        <Card currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleSiteAnterior={handleSiteAnterior} handleSiteSiguiente={handleSiteSiguiente} places={places} />
       }
     </div>
   )
 }
 
-export default Home
+export default Find
