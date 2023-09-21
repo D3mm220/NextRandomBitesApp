@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { getDataNearbySearch, getDataPlaceId, getPlacePhoto, getLocation } from "@/src/app/api/route";
 import { typesResult } from "@/src/types/typesPlaces";
 import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
@@ -74,8 +74,20 @@ const Find = () => {
       setFetchedPhoto(data)
     }
     currentPhoto !== "" && bringPhoto()
-  },[currentPhoto])
+  },[currentPhoto, indexPhoto])
 
+  //useEffect(() => {
+  //  setCurrentPhoto(photos[indexPhoto].photo_reference)
+  //  console.log(photos[indexPhoto].photo_reference)
+  //},[indexPhoto])
+
+  const handlePhotoAnterior = () => {
+    indexPhoto > 0 && setIndexPhoto(indexPhoto - 1)
+  }
+
+  const handlePhotoSiguiente = () => {
+    index < (photos.length-1) && setIndexPhoto(index +1)
+  }
 
   const handleSiteAnterior = () => {
     index > 0 && setIndex(index - 1);
@@ -89,8 +101,9 @@ const Find = () => {
     <div className="bg-[#E8F9FD] max-h-screen">
       {
         currentPlace && currentPlaceId &&
-        <Card currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleSiteAnterior={handleSiteAnterior} handleSiteSiguiente={handleSiteSiguiente} places={places} />
+        <Card currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleSiteAnterior={handleSiteAnterior} handleSiteSiguiente={handleSiteSiguiente} handlePhotoAnterior={handlePhotoAnterior} handlePhotoSiguiente={handlePhotoSiguiente} places={places} indexPhoto={indexPhoto} photos={photos} />
       }
+      {currentPhoto}
     </div>
   )
 }
