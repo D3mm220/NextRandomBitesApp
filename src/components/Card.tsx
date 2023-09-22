@@ -22,15 +22,12 @@ export const Card = (props: { currentPlace: typesResult, currentPlaceId : placeI
                   objectFit={'contain'}
                 />
               </div>
-              {photos.length}
-              {photos[indexPhoto].photo_reference}
               {
               indexPhoto < (photos.length-1) ? <button onClick={handlePhotoSiguiente} className="bg-[#FF1E00] rounded w-20 h-16">Siguiente</button> : <button disabled className="bg-stone-400 rounded w-20 h-16">Siguiente</button>
               }
             </div>
           }
           <div className="buttonsCard flex flex-row gap-4">
-            {places.length}
             {
               index > 0 ? <button onClick={handleSiteAnterior} className="bg-[#FF1E00] rounded w-20 h-16">Anterior</button> : <button disabled className="bg-stone-400 rounded w-20 h-16">Anterior</button>
             }

@@ -47,8 +47,7 @@ const Find = () => {
     };
   },[location])
 
-  console.log(places)
-  console.log(currentPlaceId)
+  console.log(location)
 
   useEffect(() => {
     if (places.length > 0) {
@@ -64,6 +63,7 @@ const Find = () => {
       setPhotos(data.result.photos)
       console.log(photos)
       setCurrentPhoto(data.result.photos[0].photo_reference)
+      setIndexPhoto(0)
     }
     currentId !== "" && bringPLaceId()
   },[currentId])
@@ -74,19 +74,23 @@ const Find = () => {
       setFetchedPhoto(data)
     }
     currentPhoto !== "" && bringPhoto()
-  },[currentPhoto, indexPhoto])
+  },[currentPhoto])
 
-  //useEffect(() => {
-  //  setCurrentPhoto(photos[indexPhoto].photo_reference)
-  //  console.log(photos[indexPhoto].photo_reference)
-  //},[indexPhoto])
+  useEffect(() => {
+    // Verificamos que indexPhoto esté dentro del rango válido
+    if (indexPhoto >= 0 && indexPhoto < photos.length) {
+      // Actualizamos currentPhoto con la referencia a la foto correspondiente
+      setCurrentPhoto(photos[indexPhoto].photo_reference);
+      console.log("Corrio iteracion index photo")
+    }
+  }, [indexPhoto, photos]);
 
   const handlePhotoAnterior = () => {
     indexPhoto > 0 && setIndexPhoto(indexPhoto - 1)
   }
 
   const handlePhotoSiguiente = () => {
-    index < (photos.length-1) && setIndexPhoto(index +1)
+    index < (photos.length-1) && setIndexPhoto(indexPhoto + 1)
   }
 
   const handleSiteAnterior = () => {
@@ -103,7 +107,6 @@ const Find = () => {
         currentPlace && currentPlaceId &&
         <Card currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleSiteAnterior={handleSiteAnterior} handleSiteSiguiente={handleSiteSiguiente} handlePhotoAnterior={handlePhotoAnterior} handlePhotoSiguiente={handlePhotoSiguiente} places={places} indexPhoto={indexPhoto} photos={photos} />
       }
-      {currentPhoto}
     </div>
   )
 }
