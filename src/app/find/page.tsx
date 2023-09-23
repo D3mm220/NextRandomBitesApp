@@ -59,9 +59,12 @@ const Find = () => {
   useEffect(() => {
     const bringPLaceId = async () => {
       const data = await getDataPlaceId(currentId);
+      if (data.result.photos === undefined) {
+        setIndex(index + 1);
+        return; // Sale de la función para evitar más actualizaciones innecesarias
+      }
       setCurrentPlaceId(data.result)
       setPhotos(data.result.photos)
-      console.log(photos)
       setCurrentPhoto(data.result.photos[0].photo_reference)
       setIndexPhoto(0)
     }
@@ -77,9 +80,7 @@ const Find = () => {
   },[currentPhoto])
 
   useEffect(() => {
-    // Verificamos que indexPhoto esté dentro del rango válido
     if (indexPhoto >= 0 && indexPhoto < photos.length) {
-      // Actualizamos currentPhoto con la referencia a la foto correspondiente
       setCurrentPhoto(photos[indexPhoto].photo_reference);
       console.log("Corrio iteracion index photo")
     }
@@ -90,7 +91,7 @@ const Find = () => {
   }
 
   const handlePhotoSiguiente = () => {
-    index < (photos.length-1) && setIndexPhoto(indexPhoto + 1)
+    indexPhoto < (photos.length-1) && setIndexPhoto(indexPhoto + 1)
   }
 
   const handleSiteAnterior = () => {
@@ -100,6 +101,9 @@ const Find = () => {
   const handleSiteSiguiente = () => {
     index < (places.length-1) && setIndex(index + 1);
   }
+
+  console.log(currentPlaceId?.photos)
+
 
   return (
     <div className="bg-[#E8F9FD] max-h-screen">
