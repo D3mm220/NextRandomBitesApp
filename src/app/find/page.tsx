@@ -111,6 +111,9 @@ const Find = () => {
         currentPlace && currentPlaceId &&
         <Card currentPlace={currentPlace} currentPlaceId={currentPlaceId} fetchedPhoto={fetchedPhoto} index={index} handleSiteAnterior={handleSiteAnterior} handleSiteSiguiente={handleSiteSiguiente} handlePhotoAnterior={handlePhotoAnterior} handlePhotoSiguiente={handlePhotoSiguiente} places={places} indexPhoto={indexPhoto} photos={photos} />
       }
+      <p className="bg-[#E8F9FD] max-h-screen">
+        All photos are taken from the official Google Maps API, Random Bites is not responsible for any photos that may appear, contact Google or the establishment to improve the quality of service. Random Bites all rights reserved ©
+      </p>
     </div>
   )
 }
