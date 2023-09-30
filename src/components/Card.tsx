@@ -43,9 +43,9 @@ export const Card = (props: {
           </div>
         </div>
         <div className="rightSide flex flex-col justify-center items-around p-4">
-          <div className="text flex flex-col h-[400px] text-4xl justify-around">
+          <div className="text flex flex-col h-[400px] w-[700px] text-4xl justify-around items-start">
             <p className="self-start">Place: {currentPlace.name}</p>
-            <p className="self-end">
+            <p className="self-start">
               Direction: {currentPlaceId.formatted_address}
             </p>
           </div>
