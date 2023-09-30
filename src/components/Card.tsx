@@ -30,7 +30,7 @@ export const Card = (props: {
   } = props;
 
   return (
-    <div className="containerDiv h-[calc(100vh-6rem-48px)] flex justify-center items-center">
+    <div className="containerDiv h-[calc(100vh-6rem-24px)] flex justify-center items-center">
       <div className="container flex flex-row h-[600px] w-[1600px] bg-[#FF1E00] rounded-md shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]">
         <div className="leftSide flex flex-col">
           <div className="backgroundImage flex relative bg-black justify-center items-center w-[800px] h-[600px]">
@@ -43,7 +43,7 @@ export const Card = (props: {
           </div>
         </div>
         <div className="rightSide flex flex-col justify-center items-around p-4">
-          <div className="text flex flex-col h-[400px] text-4xl">
+          <div className="text flex flex-col h-[400px] text-4xl justify-around">
             <p className="self-start">Place: {currentPlace.name}</p>
             <p className="self-end">
               Direction: {currentPlaceId.formatted_address}

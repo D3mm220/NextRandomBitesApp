@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import {
   getDataNearbySearch,
   getDataPlaceId,
@@ -11,7 +11,6 @@ import { typesResult } from "@/src/types/typesPlaces";
 import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
 import { Location } from "@/src/types/typesGeolocation";
 import { Card } from "@/src/components/Card";
-import { Console } from "console";
 
 const Find = () => {
   // typesPlaces Array
