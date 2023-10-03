@@ -18,6 +18,9 @@ export const Navbar = () => {
         <Link href="/" className="text-2xl">
           Home
         </Link>
+        <Link href="/login" className="text-2xl">
+          Login
+        </Link>
         <Link href="/find" className="text-2xl">
           Find
         </Link>
