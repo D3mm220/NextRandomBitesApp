@@ -17,7 +17,6 @@ export default async function Home() {
   //if (!session) {
   // this is a protected route - only users who are signed in can view this route
   //}
-  //#ff1e00 to #000000
 
   return (
     <div className=" text-black flex flex-col ">
@@ -33,8 +32,14 @@ export default async function Home() {
         />
       </div>
       <div>
-        <div className="flex justify-end">
-          <Image src="/photo3.png" alt="PageRB" width={4000} height={0} />
+        <div className="flex justify-end ">
+          <Image
+            src="/photo3.png"
+            alt="PageRB"
+            width={4000}
+            height={0}
+            style={{ marginRight: "-40%" }}
+          />
         </div>
         <div className="flex justify-start">
           <Image src="/photo2.png" alt="pcRB" width={1500} height={0} />

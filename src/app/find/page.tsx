@@ -129,7 +129,7 @@ const Find = () => {
   };
 
   return (
-    <div className="bg-[#E8F9FD] max-h-screen">
+    <div className="bg-gradient-to-br from-red-600 to-black">
       {currentPlace && currentPlaceId && (
         <Card
           currentPlace={currentPlace}
@@ -145,7 +145,7 @@ const Find = () => {
           photos={photos}
         />
       )}
-      <p className="bg-[#E8F9FD] max-h-screen">
+      <p className="text-white">
         All photos are taken from the official Google Maps API, Random Bites is
         not responsible for any photos that may appear, contact Google or the
         establishment to improve the quality of service. Random Bites all rights
