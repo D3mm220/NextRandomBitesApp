@@ -1,14 +1,42 @@
-export default function Login() {
+"use client";
+
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
+
+const Login = () => {
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+
+  async function handleSignUp() {
+    await supabase.auth.signUp({
+      email: process.env.NEXT_PUBLIC_TEST_USER_EMAIL!,
+      password: "aaaa",
+      options: {
+        emailRedirectTo: `${location.origin}/auth/callback`,
+      },
+    });
+  }
+
+  async function handleSignIn() {
+    await supabase.auth.signInWithPassword({
+      email: process.env.NEXT_PUBLIC_TEST_USER_EMAIL!,
+      password: "aaaa",
+    });
+    router.refresh();
+  }
+
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    router.refresh();
+  }
+
   return (
-    <div className="flex flex-col gap-2">
-      <form className="flex flex-col" action="/auth/login" method="post">
-        <label htmlFor="email">Email</label>
-        <input name="email" />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" />
-        <button>Sign In</button>
-        <button formAction="/auth/sign-up">Sign Up</button>
-      </form>
+    <div className="flex gap-2">
+      <button onClick={handleSignUp}>Sign up</button>
+      <button onClick={handleSignIn}>Sign in</button>
+      <button onClick={handleSignOut}>Sign out</button>
     </div>
   );
-}
+};
+
+export default Login;
