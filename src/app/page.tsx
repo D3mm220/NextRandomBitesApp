@@ -16,7 +16,7 @@ export default async function Home() {
 
   //if (!session) {
   // this is a protected route - only users who are signed in can view this route
-  //}
+  /// hola nueva verisons
 
   return (
     <div className=" text-black flex flex-col ">
