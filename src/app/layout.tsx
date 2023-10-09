@@ -20,6 +20,12 @@ export default function RootLayout({
       <body className="bg-gradient-to-br from-red-600 to-black  min-h-screen h-full">
         <Navbar />
         {children}
+        <p className="text-white">
+          All photos are taken from the official Google Maps API, Random Bites
+          is not responsible for any photos that may appear, contact Google or
+          the establishment to improve the quality of service. Random Bites all
+          rights reserved ©
+        </p>
       </body>
     </html>
   );

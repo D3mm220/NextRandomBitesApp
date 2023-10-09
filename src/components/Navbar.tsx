@@ -21,9 +21,6 @@ export const Navbar = () => {
         <Link href="/find" className="text-2xl">
           Find
         </Link>
-        <Link href="/login" className="text-2xl">
-          LogOut
-        </Link>
       </div>
     </nav>
   );

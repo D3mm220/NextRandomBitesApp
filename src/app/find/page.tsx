@@ -16,10 +16,8 @@ const Find = () => {
   // typesPlaces Array
   // Array{typesPlaces} other form
   const [places, setPlaces] = useState<typesResult[]>([]); // Array de los lugares que devuelve getDataNearbySearch
-  console.log("🚀 ~ file: page.tsx:20 ~ Find ~ places:", places);
   const [currentPlace, setCurrentPlace] = useState<typesResult>(); // Objecto del CurrentPlace, parte del array de places
   const [index, setIndex] = useState<number>(0); // Integer helper para la iteration del CurrentPlace
-  console.log("🚀 ~ file: page.tsx:22 ~ Find ~ index:", index);
   const [currentId, setCurrentId] = useState<string>(""); // ID del CurrentPlace
   const [currentPlaceId, setCurrentPlaceId] = useState<placeIdResult>(); // ARRAY OF PLACE ID
   const [photos, setPhotos] = useState<Photo[]>([]); // ARRAY OF Photos
@@ -27,9 +25,17 @@ const Find = () => {
   const [currentPhoto, setCurrentPhoto] = useState<string>("");
   const [fetchedPhoto, setFetchedPhoto] = useState<string>("");
   const [location, setLocation] = useState<Location>(); // Coordenadas del usuario
-  const [lastAction, setLastAction] = useState(null);
+  const [lastAction, setLastAction] = useState("");
+
+  console.log("🚀Cantidad de lugares", places);
+  console.log("🚀CurrentPlace actual: ", currentPlace);
+  console.log("🚀posicion del lugar que estamos:", index);
+  console.log("🚀 id de la posicion actual:", currentId);
+  console.log("🚀placeId de la posicion actual:", currentPlaceId);
+  console.log("🚀Cantidad de fotos", photos);
+  console.log("🚀Posicion de la foto:", indexPhoto);
+  console.log("🚀Foto actual:", currentPhoto);
   console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
-  console.log(places.length);
 
   //trae las coordenadas
   useEffect(() => {
@@ -145,12 +151,6 @@ const Find = () => {
           photos={photos}
         />
       )}
-      <p className="text-white">
-        All photos are taken from the official Google Maps API, Random Bites is
-        not responsible for any photos that may appear, contact Google or the
-        establishment to improve the quality of service. Random Bites all rights
-        reserved ©
-      </p>
     </div>
   );
 };
