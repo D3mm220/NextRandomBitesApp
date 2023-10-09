@@ -129,7 +129,7 @@ const Find = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-red-600 to-black">
+    <div className="">
       {currentPlace && currentPlaceId && (
         <Card
           currentPlace={currentPlace}
