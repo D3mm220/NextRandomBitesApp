@@ -31,14 +31,15 @@ export const Card = (props: {
 
   return (
     <div className="containerCard pt-1 lg:pt-10 flex justify-center items-center">
-      <div className="card flex flex-col h-[600px] w-[350px] sm:w-[600px] sm:h-[650px] md:w-[750px] md:h-[825px] lg:flex-row lg:h-[600px] lg:w-[1600px] bg-red-50 sm:bg-blue-500 md:bg-gray-400 lg:bg-[#FF1E00] rounded-md shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]">
+      <div className="card flex flex-col h-[650px] w-[350px] sm:w-[600px] sm:h-[650px] md:w-[750px] md:h-[850px] lg:flex-row lg:h-[600px] lg:w-[1600px] bg-[#FF1E00] rounded-md shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]">
         <div className="leftSide flex flex-col">
-          <div className="backgroundImage flex relative bg-black justify-center items-center w-[350px] h-[400px] sm:w-[600px] md:h-[600px] md:w-[750px] lg:w-[800px] lg:h-[600px]">
+          <div className="backgroundImage flex relative bg-black justify-center items-center w-[350px] h-[400px] sm:w-[600px] md:h-[600px] md:w-[750px] lg:w-[800px] lg:h-[600px]  rounded-l-lg">
             <Image
               src={fetchedPhoto}
               alt={fetchedPhoto}
               fill={true}
               objectFit={"contain"}
+              className="rounded-l-lg"
             />
           </div>
         </div>
