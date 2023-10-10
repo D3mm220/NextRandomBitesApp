@@ -135,7 +135,7 @@ const Find = () => {
   };
 
   return (
-    <div className="">
+    <>
       {currentPlace && currentPlaceId && (
         <Card
           currentPlace={currentPlace}
@@ -151,7 +151,7 @@ const Find = () => {
           photos={photos}
         />
       )}
-    </div>
+    </>
   );
 };
 

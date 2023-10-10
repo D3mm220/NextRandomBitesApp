@@ -40,7 +40,7 @@ export default async function Home() {
       </div>
       <div>
         <div>
-          <p className="p2 flex flex-col text-2xl lg:text-4xl md:text-3xl p-10 lg:p-40 text-center text-white">
+          <p className="p2 flex flex-col text-2xl lg:text-4xl md:text-3xl  p-10 lg:p-40 text-center text-white">
             Random Bites hace mucho énfasis en la optimización del tiempo,
             facilitar la ux para conseguir un lugar para comer lo mas antes
             posible. El padre de esta creación, google maps, abarca todo
