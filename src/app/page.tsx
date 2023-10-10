@@ -14,9 +14,7 @@ export default async function Home() {
           width={300}
           height={300}
         />
-        di
       </div>
-
       <div>
         <div className="p1 flex flex-col text-2xl lg:text-4xl md:text-3xl p-10 lg:p-40 text-center text-white">
           Random Bites nació con el propósito de ayudar a las personas a

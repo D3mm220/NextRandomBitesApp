@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { LoginModal } from "./auth/LoginModal";
+import { SignUpModal } from "./auth/SignUpModal";
 
 export const Navbar = () => {
   return (
@@ -15,12 +17,14 @@ export const Navbar = () => {
         </Link>
       </div>
       <div className="right-side flex gap-5">
-        <Link href="/" className="text-2xl">
+        <Link href="/" className="text-2xl hover:bg-red-600 ">
           Home
         </Link>
-        <Link href="/find" className="text-2xl">
+        <Link href="/find" className="text-2xl  hover:bg-red-600">
           Find
         </Link>
+        <LoginModal />
+        <SignUpModal />
       </div>
     </nav>
   );
