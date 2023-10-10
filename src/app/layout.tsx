@@ -17,10 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-br from-red-600 to-black min-h-screen overflow-x-hidden h-full ">
+      <body className="bg-gradient-to-br from-red-600 to-black min-h-screen overflow-x-hidden  ">
         <Navbar />
         {children}
-        <p className="text-white text-2xl pt-14">
+        <p className="text-white text-2xl pt-14 px-3">
           All photos are taken from the official Google Maps API, Random Bites
           is not responsible for any photos that may appear, contact Google or
           the establishment to improve the quality of service. Random Bites all
