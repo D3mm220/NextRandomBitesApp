@@ -11,8 +11,14 @@ import { typesResult } from "@/src/types/typesPlaces";
 import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
 import { Location } from "@/src/types/typesGeolocation";
 import { Card } from "@/src/components/Card";
+import { redirect } from "next/navigation";
 
-const Find = () => {
+type FindProps = {
+  session: any;
+};
+
+const Find = (props: FindProps) => {
+  const { session } = props;
   // typesPlaces Array
   // Array{typesPlaces} other form
   const [places, setPlaces] = useState<typesResult[]>([]); // Array de los lugares que devuelve getDataNearbySearch
@@ -136,21 +142,26 @@ const Find = () => {
 
   return (
     <>
-      {currentPlace && currentPlaceId && (
-        <Card
-          currentPlace={currentPlace}
-          currentPlaceId={currentPlaceId}
-          fetchedPhoto={fetchedPhoto}
-          index={index}
-          handleSiteAnterior={handleSiteAnterior}
-          handleSiteSiguiente={handleSiteSiguiente}
-          handlePhotoAnterior={handlePhotoAnterior}
-          handlePhotoSiguiente={handlePhotoSiguiente}
-          places={places}
-          indexPhoto={indexPhoto}
-          photos={photos}
-        />
+      {session !== undefined && (
+        <>
+          {currentPlace && currentPlaceId && (
+            <Card
+              currentPlace={currentPlace}
+              currentPlaceId={currentPlaceId}
+              fetchedPhoto={fetchedPhoto}
+              index={index}
+              handleSiteAnterior={handleSiteAnterior}
+              handleSiteSiguiente={handleSiteSiguiente}
+              handlePhotoAnterior={handlePhotoAnterior}
+              handlePhotoSiguiente={handlePhotoSiguiente}
+              places={places}
+              indexPhoto={indexPhoto}
+              photos={photos}
+            />
+          )}
+        </>
       )}
+      else {redirect("/")}
     </>
   );
 };

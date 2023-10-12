@@ -1,8 +1,5 @@
 "use client";
 
-import React from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,14 +13,20 @@ import {
 } from "@/components/ui/alert-dialog";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 export const SignOutBtn = () => {
   const supabase = createClientComponentClient();
+  const { toast } = useToast();
   const router = useRouter();
   const logout = async () => {
     await supabase.auth.signOut();
+    toast({
+      title: "Logged out!",
+      description: "Logged out successfully!",
+      className: "bg-green-400",
+    });
     router.refresh();
-    toast.success("te fuiste deslogeado", { theme: "colored" });
   };
 
   return (
@@ -40,9 +43,7 @@ export const SignOutBtn = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-600" onClick={logout}>
-            Continue
-          </AlertDialogAction>
+          <AlertDialogAction onClick={logout}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

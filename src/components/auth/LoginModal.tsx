@@ -1,7 +1,4 @@
 "use client";
-
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import {
   AlertDialog,
@@ -11,24 +8,29 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import Link from "next/link";
+import { X } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginType, loginSchema } from "@/validations/authSchema";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { X } from "lucide-react";
-import githubLogo from "@/public/github.png";
-import googleLogo from "@/public/google.png";
-import { loginSchema, LoginType } from "@/validations/authSchema";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
+import Link from "next/link";
+
+import Image from "next/image";
+
+import githubLogo from "@/public/github.png";
+import googleLogo from "@/public/google.png";
 
 export const LoginModal = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const supabase = createClientComponentClient();
+  const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
   const {
     register,
@@ -38,12 +40,11 @@ export const LoginModal = () => {
     resolver: yupResolver(loginSchema),
   });
   const onSubmit = async (payload: LoginType) => {
-    setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: payload.email,
       password: payload.password,
     });
-    setLoading(false);
+
     if (error) {
       toast.error(error.message, { theme: "colored" });
     } else if (data.user) {
@@ -104,9 +105,7 @@ export const LoginModal = () => {
                     </span>
                   </div>
                   <div className="mt-5">
-                    <Button className="bg-[#FF1E00] w-full" disabled={loading}>
-                      {loading ? "Processing" : "Continue"}
-                    </Button>
+                    <Button className="bg-[#FF1E00] w-full">Continue</Button>
                   </div>
                   <div className="text-center my-2 text-xl">-- OR --</div>
                   <Button variant="outline" className="w-full mt-5">

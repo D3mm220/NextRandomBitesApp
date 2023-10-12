@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Toast from "../components/Toast";
 
 export default function Home() {
   return (
@@ -6,7 +7,7 @@ export default function Home() {
       <h1 className="text-6xl flex justify-center pt-6 pb-4 font-serif font-semibold">
         Random Bites
       </h1>
-
+      <Toast />
       <div className="flex justify-center items-center">
         <Image
           src="/RandomBites.svg"
