@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default async function Home() {
+export default function Home() {
   return (
     <div className=" text-black flex flex-col ">
       <h1 className="text-6xl flex justify-center pt-6 pb-4 font-serif font-semibold">

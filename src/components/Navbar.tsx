@@ -2,8 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { LoginModal } from "./auth/LoginModal";
 import { SignUpModal } from "./auth/SignUpModal";
+import { cookies } from "next/headers";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { SignOutBtn } from "./common/SignOutBtn";
 
-export const Navbar = () => {
+export const Navbar = async () => {
+  const supabase = createServerComponentClient({ cookies });
+  const { data, error } = await supabase.auth.getSession();
+  console.log("The session ", data);
   return (
     <nav className="flex bg-[#FF1E00] h-24  justify-between items-center px-10 text-black font-semibold border-b-2 border-black">
       <div className="left-side">
@@ -20,11 +26,20 @@ export const Navbar = () => {
         <Link href="/" className="text-2xl hover:bg-red-600 ">
           Home
         </Link>
-        <Link href="/find" className="text-2xl  hover:bg-red-600">
-          Find
-        </Link>
-        <LoginModal />
-        <SignUpModal />
+
+        {data?.session?.user !== null ? (
+          <>
+            <Link href="/home" className="text-2xl  hover:bg-red-600">
+              Find
+            </Link>
+            <SignOutBtn />
+          </>
+        ) : (
+          <>
+            <LoginModal />
+            <SignUpModal />
+          </>
+        )}
       </div>
     </nav>
   );
