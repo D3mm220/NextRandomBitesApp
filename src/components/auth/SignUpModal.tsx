@@ -24,6 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { SocialAuth } from "./SocialAuth";
 
 export const SignUpModal = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -136,27 +137,8 @@ export const SignUpModal = () => {
                     </Button>
                   </div>
                   <div className="text-center my-2 text-xl">-- OR --</div>
-                  <Button variant="outline" className="w-full mt-5">
-                    <Image
-                      src={googleLogo}
-                      alt="googlePhoto"
-                      height={25}
-                      width={25}
-                      className="mr-5"
-                    />
-                    Continue with Google
-                  </Button>
-                  <Button variant="outline" className="w-full mt-5">
-                    <Image
-                      src={githubLogo}
-                      alt="githubPhoto"
-                      height={25}
-                      width={25}
-                      className="mr-5"
-                    />
-                    Continue with Github
-                  </Button>
                 </form>
+                <SocialAuth />
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>

@@ -25,8 +25,7 @@ import Link from "next/link";
 
 import Image from "next/image";
 
-import githubLogo from "@/public/github.png";
-import googleLogo from "@/public/google.png";
+import { SocialAuth } from "./SocialAuth";
 
 export const LoginModal = () => {
   const supabase = createClientComponentClient();
@@ -108,27 +107,8 @@ export const LoginModal = () => {
                     <Button className="bg-[#FF1E00] w-full">Continue</Button>
                   </div>
                   <div className="text-center my-2 text-xl">-- OR --</div>
-                  <Button variant="outline" className="w-full mt-5">
-                    <Image
-                      src={googleLogo}
-                      alt="googlePhoto"
-                      height={25}
-                      width={25}
-                      className="mr-5"
-                    />
-                    Continue with Google
-                  </Button>
-                  <Button variant="outline" className="w-full mt-5">
-                    <Image
-                      src={githubLogo}
-                      alt="githubPhoto"
-                      height={25}
-                      width={25}
-                      className="mr-5"
-                    />
-                    Continue with Github
-                  </Button>
                 </form>
+                <SocialAuth />
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>

@@ -11,8 +11,12 @@ export default function Toast() {
     if (params?.get("error")) {
       toast.error(params.get("error"), { type: "error", theme: "colored" });
     } else if (params?.get("success")) {
-      toast.success(params.get("success"), { theme: "colored" });
+      toast.success(params.get("success"), {
+        theme: "colored",
+        toastId: "success1",
+      });
     }
+    console.log(params);
   }, [params]);
 
   return (

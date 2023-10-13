@@ -19,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gradient-to-br from-red-600 to-black min-h-screen overflow-x-hidden  ">
         <Navbar />
+
         {children}
         <p className="text-white text-lg lg:text-2xl pt-14 flex px-3">
           All photos are taken from the official Google Maps API, Random Bites
