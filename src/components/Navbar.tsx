@@ -16,7 +16,7 @@ export const Navbar = async () => {
   console.log(typeof user);
   return (
     <>
-      <nav className="flex bg-[#FF1E00] h-24  justify-between items-center px-10 text-black font-semibold border-b-2 border-black">
+      <nav className="flex bg-[#ff0000c0] h-24  justify-between items-center px-10 text-black font-semibold border-b-2 border-black">
         <div className="left-side">
           <Link href="/">
             <Image
@@ -27,13 +27,19 @@ export const Navbar = async () => {
             ></Image>
           </Link>
         </div>
-        <div className="right-side flex gap-5">
-          <Link href="/" className="text-2xl hover:bg-red-600 ">
+        <div className="right-side flex gap-10">
+          <Link
+            href="/"
+            className="text-2xl hover:bg-red-600  hover:font-bold rounded-xl"
+          >
             Home
           </Link>
           {user !== null ? (
             <>
-              <Link href="/find" className="text-2xl  hover:bg-red-600">
+              <Link
+                href="/find"
+                className="text-2xl  hover:bg-red-600 rounded-xl hover:font-bold"
+              >
                 Find
               </Link>
               <SignOutBtn />

@@ -32,7 +32,9 @@ export const SignOutBtn = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <li className="text-2xl  hover:bg-red-600 cursor-pointer">Logout</li>
+        <li className="text-2xl  hover:bg-red-600 cursor-pointer hover:rounded-xl hover:font-bold">
+          Logout
+        </li>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

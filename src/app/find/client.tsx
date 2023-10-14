@@ -13,6 +13,7 @@ import { Location } from "@/src/types/typesGeolocation";
 import { Card } from "@/src/components/Card";
 import { redirect } from "next/navigation";
 import { User } from "@supabase/supabase-js";
+import { Carddos } from "@/src/components/Carddos";
 
 const Find = ({ user }: { user: User | null }) => {
   if (!user) {

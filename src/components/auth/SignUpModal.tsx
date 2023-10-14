@@ -69,7 +69,7 @@ export const SignUpModal = () => {
       <AlertDialog open={open}>
         <AlertDialogTrigger asChild>
           <li
-            className="text-2xl hover:bg-red-600 cursor-pointer"
+            className="text-2xl hover:bg-red-600 cursor-pointer rounded-xl hover:font-bold"
             onClick={() => setOpen(true)}
           >
             SignUp
