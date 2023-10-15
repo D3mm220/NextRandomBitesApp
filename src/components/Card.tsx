@@ -61,7 +61,7 @@ export const Card = (props: {
           )}
           <div className="backgroundImage flex relative bg-black justify-center items-center w-[350px] h-[400px] sm:w-[600px] md:h-[600px] md:w-[750px] lg:w-[1200px] lg:h-[600px]  rounded-3xl">
             <Image
-              src={fetchedPhoto}
+              src={fetchedPhoto ? fetchedPhoto : "/public/photodefault.webp"}
               alt={fetchedPhoto}
               fill={true}
               objectFit={"contain"}
@@ -106,7 +106,8 @@ export const Card = (props: {
                     <ChevronLeft className="w-10 h-10"></ChevronLeft>
                     <Image
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEu91LsuBVEUxvHfiU4hKpd3kChET6HQ6DRUSolEI8QbEAqRUOqodBKVhF40vIO4VCJRIjuZEcbs2WecGavZ+8ua+f77tlZHy9Fp2V8M8JGB83xKR9cZAzxiCMN4QkrXBpxjFlvYRErXBkzgOvtrMhur9E2MUHXJO1jDGeawjfUKXcqoAoziHg8I83AfYR7TtQHhh9TrKeZ/Qf61Di4x1VDhXWE6eH3fwQsGGgIEr8Ei4A5jDQFuMV4E5MXUBCN/2j+OaBV7TbhjBQfFHfTjGWHsJV4xgrciIOglHPXijkWc5B5ldXCI5T9C9hGO+ivKAH1ZFw19qE7sYgPvKUCeX8Bxl4R5nJZ9m2oVea9JcaI+KUA37eMCM7EVpACplSfzrQM+AULROxk9XhFGAAAAAElFTkSuQmCC"
-                      className="w-10 h-10"
+                      width={40}
+                      height={40}
                       alt="imagecomida"
                     />
                   </div>
@@ -120,7 +121,8 @@ export const Card = (props: {
                     <ChevronLeft className="w-10 h-10"></ChevronLeft>
                     <Image
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEu91LsuBVEUxvHfiU4hKpd3kChET6HQ6DRUSolEI8QbEAqRUOqodBKVhF40vIO4VCJRIjuZEcbs2WecGavZ+8ua+f77tlZHy9Fp2V8M8JGB83xKR9cZAzxiCMN4QkrXBpxjFlvYRErXBkzgOvtrMhur9E2MUHXJO1jDGeawjfUKXcqoAoziHg8I83AfYR7TtQHhh9TrKeZ/Qf61Di4x1VDhXWE6eH3fwQsGGgIEr8Ei4A5jDQFuMV4E5MXUBCN/2j+OaBV7TbhjBQfFHfTjGWHsJV4xgrciIOglHPXijkWc5B5ldXCI5T9C9hGO+ivKAH1ZFw19qE7sYgPvKUCeX8Bxl4R5nJZ9m2oVea9JcaI+KUA37eMCM7EVpACplSfzrQM+AULROxk9XhFGAAAAAElFTkSuQmCC"
-                      className="w-10 h-10"
+                      width={40}
+                      height={40}
                       alt="imagecomida2"
                     />
                   </div>
@@ -134,7 +136,8 @@ export const Card = (props: {
                   <div className="flex flex-row justify-around">
                     <Image
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEu91LsuBVEUxvHfiU4hKpd3kChET6HQ6DRUSolEI8QbEAqRUOqodBKVhF40vIO4VCJRIjuZEcbs2WecGavZ+8ua+f77tlZHy9Fp2V8M8JGB83xKR9cZAzxiCMN4QkrXBpxjFlvYRErXBkzgOvtrMhur9E2MUHXJO1jDGeawjfUKXcqoAoziHg8I83AfYR7TtQHhh9TrKeZ/Qf61Di4x1VDhXWE6eH3fwQsGGgIEr8Ei4A5jDQFuMV4E5MXUBCN/2j+OaBV7TbhjBQfFHfTjGWHsJV4xgrciIOglHPXijkWc5B5ldXCI5T9C9hGO+ivKAH1ZFw19qE7sYgPvKUCeX8Bxl4R5nJZ9m2oVea9JcaI+KUA37eMCM7EVpACplSfzrQM+AULROxk9XhFGAAAAAElFTkSuQmCC"
-                      className="w-10 h-10"
+                      width={40}
+                      height={40}
                       alt="imagecomida3"
                     />
                     <ChevronRight className="w-10 h-10"></ChevronRight>
@@ -148,7 +151,8 @@ export const Card = (props: {
                   <div className="flex flex-row justify-around">
                     <Image
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEu91LsuBVEUxvHfiU4hKpd3kChET6HQ6DRUSolEI8QbEAqRUOqodBKVhF40vIO4VCJRIjuZEcbs2WecGavZ+8ua+f77tlZHy9Fp2V8M8JGB83xKR9cZAzxiCMN4QkrXBpxjFlvYRErXBkzgOvtrMhur9E2MUHXJO1jDGeawjfUKXcqoAoziHg8I83AfYR7TtQHhh9TrKeZ/Qf61Di4x1VDhXWE6eH3fwQsGGgIEr8Ei4A5jDQFuMV4E5MXUBCN/2j+OaBV7TbhjBQfFHfTjGWHsJV4xgrciIOglHPXijkWc5B5ldXCI5T9C9hGO+ivKAH1ZFw19qE7sYgPvKUCeX8Bxl4R5nJZ9m2oVea9JcaI+KUA37eMCM7EVpACplSfzrQM+AULROxk9XhFGAAAAAElFTkSuQmCC"
-                      className="w-10 h-10"
+                      width={40}
+                      height={40}
                       alt="imagecomida4"
                     />
                     <ChevronRight className="w-10 h-10"></ChevronRight>

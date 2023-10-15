@@ -59,21 +59,15 @@ const Find = ({ user }: { user: User | null }) => {
           },
         });
         //const dataNearby = await axios.get(location);
-
-        setPlaces(dataNearby.data.data.results);
-        setCurrentPlace(dataNearby.data.data.results[0]);
-        setCurrentId(dataNearby.data.data.results[0].place_id);
-        while (places.length === 0) {
-          setPlaces(dataNearby.data.data.results);
-          setCurrentPlace(dataNearby.data.data.results[0]);
-          setCurrentId(dataNearby.data.data.results[0].place_id);
-        }
-        console.log(places.length);
+        const AxiosData = dataNearby.data.data.results;
+        console.log(AxiosData);
+        setPlaces(AxiosData);
+        setCurrentPlace(AxiosData[0]);
+        setCurrentId(AxiosData[0].place_id);
       };
       bringNearbySearch();
     }
   }, [location]);
-
   // console.log(location);
 
   useEffect(() => {
@@ -128,10 +122,12 @@ const Find = ({ user }: { user: User | null }) => {
         },
       });
       //const data = await getPlacePhoto(currentPhoto);
-      setFetchedPhoto(data.data.result.photos);
+      setFetchedPhoto(data.data);
     };
     currentPhoto !== "" && bringPhoto();
   }, [currentPhoto]);
+
+  console.log(fetchedPhoto);
 
   useEffect(() => {
     if (indexPhoto >= 0 && indexPhoto < photos.length) {

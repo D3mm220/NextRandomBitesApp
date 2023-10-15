@@ -24,7 +24,7 @@ export const Navbar = async () => {
               alt="Random Bites Logo"
               width={80}
               height={80}
-            ></Image>
+            />
           </Link>
         </div>
         <div className="right-side flex gap-10">
