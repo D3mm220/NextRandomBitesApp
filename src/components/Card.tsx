@@ -1,4 +1,4 @@
-import { placeIdResult } from "../types/typesPlaceId";
+import { Photo, placeIdResult } from "../types/typesPlaceId";
 import { typesResult } from "../types/typesPlaces";
 import Image from "next/image";
 import { ChevronRight, ChevronLeft } from "lucide-react";
@@ -12,11 +12,11 @@ export const Card = (props: {
   index: number;
   handleSiteAnterior: () => void;
   handleSiteSiguiente: () => void;
-  places: [];
+  places: typesResult[];
   handlePhotoSiguiente: () => void;
   handlePhotoAnterior: () => void;
   indexPhoto: number;
-  photos: [];
+  photos: Photo[];
 }) => {
   const {
     currentPlace,
