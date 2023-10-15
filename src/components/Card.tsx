@@ -104,9 +104,10 @@ export const Card = (props: {
                 >
                   <div className="flex flex-row justify-around">
                     <ChevronLeft className="w-10 h-10"></ChevronLeft>
-                    <img
+                    <Image
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEu91LsuBVEUxvHfiU4hKpd3kChET6HQ6DRUSolEI8QbEAqRUOqodBKVhF40vIO4VCJRIjuZEcbs2WecGavZ+8ua+f77tlZHy9Fp2V8M8JGB83xKR9cZAzxiCMN4QkrXBpxjFlvYRErXBkzgOvtrMhur9E2MUHXJO1jDGeawjfUKXcqoAoziHg8I83AfYR7TtQHhh9TrKeZ/Qf61Di4x1VDhXWE6eH3fwQsGGgIEr8Ei4A5jDQFuMV4E5MXUBCN/2j+OaBV7TbhjBQfFHfTjGWHsJV4xgrciIOglHPXijkWc5B5ldXCI5T9C9hGO+ivKAH1ZFw19qE7sYgPvKUCeX8Bxl4R5nJZ9m2oVea9JcaI+KUA37eMCM7EVpACplSfzrQM+AULROxk9XhFGAAAAAElFTkSuQmCC"
                       className="w-10 h-10"
+                      alt="imagecomida"
                     />
                   </div>
                 </button>
@@ -117,9 +118,10 @@ export const Card = (props: {
                 >
                   <div className="flex flex-row justify-around">
                     <ChevronLeft className="w-10 h-10"></ChevronLeft>
-                    <img
+                    <Image
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEu91LsuBVEUxvHfiU4hKpd3kChET6HQ6DRUSolEI8QbEAqRUOqodBKVhF40vIO4VCJRIjuZEcbs2WecGavZ+8ua+f77tlZHy9Fp2V8M8JGB83xKR9cZAzxiCMN4QkrXBpxjFlvYRErXBkzgOvtrMhur9E2MUHXJO1jDGeawjfUKXcqoAoziHg8I83AfYR7TtQHhh9TrKeZ/Qf61Di4x1VDhXWE6eH3fwQsGGgIEr8Ei4A5jDQFuMV4E5MXUBCN/2j+OaBV7TbhjBQfFHfTjGWHsJV4xgrciIOglHPXijkWc5B5ldXCI5T9C9hGO+ivKAH1ZFw19qE7sYgPvKUCeX8Bxl4R5nJZ9m2oVea9JcaI+KUA37eMCM7EVpACplSfzrQM+AULROxk9XhFGAAAAAElFTkSuQmCC"
                       className="w-10 h-10"
+                      alt="imagecomida2"
                     />
                   </div>
                 </button>
@@ -130,9 +132,10 @@ export const Card = (props: {
                   className="bg-white rounded w-20 sm:w-28 h-12 sm:h-14 mx-2  lg:w-32 lg:h-16 lg:m-4 border-black border-solid border-2 hover:bg-gray-300"
                 >
                   <div className="flex flex-row justify-around">
-                    <img
+                    <Image
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEu91LsuBVEUxvHfiU4hKpd3kChET6HQ6DRUSolEI8QbEAqRUOqodBKVhF40vIO4VCJRIjuZEcbs2WecGavZ+8ua+f77tlZHy9Fp2V8M8JGB83xKR9cZAzxiCMN4QkrXBpxjFlvYRErXBkzgOvtrMhur9E2MUHXJO1jDGeawjfUKXcqoAoziHg8I83AfYR7TtQHhh9TrKeZ/Qf61Di4x1VDhXWE6eH3fwQsGGgIEr8Ei4A5jDQFuMV4E5MXUBCN/2j+OaBV7TbhjBQfFHfTjGWHsJV4xgrciIOglHPXijkWc5B5ldXCI5T9C9hGO+ivKAH1ZFw19qE7sYgPvKUCeX8Bxl4R5nJZ9m2oVea9JcaI+KUA37eMCM7EVpACplSfzrQM+AULROxk9XhFGAAAAAElFTkSuQmCC"
                       className="w-10 h-10"
+                      alt="imagecomida3"
                     />
                     <ChevronRight className="w-10 h-10"></ChevronRight>
                   </div>
@@ -143,9 +146,10 @@ export const Card = (props: {
                   className="bg-stone-400 rounded w-20 sm:w-28 h-12 sm:h-14 mx-2  lg:w-32 lg:h-16 lg:m-4"
                 >
                   <div className="flex flex-row justify-around">
-                    <img
+                    <Image
                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEu91LsuBVEUxvHfiU4hKpd3kChET6HQ6DRUSolEI8QbEAqRUOqodBKVhF40vIO4VCJRIjuZEcbs2WecGavZ+8ua+f77tlZHy9Fp2V8M8JGB83xKR9cZAzxiCMN4QkrXBpxjFlvYRErXBkzgOvtrMhur9E2MUHXJO1jDGeawjfUKXcqoAoziHg8I83AfYR7TtQHhh9TrKeZ/Qf61Di4x1VDhXWE6eH3fwQsGGgIEr8Ei4A5jDQFuMV4E5MXUBCN/2j+OaBV7TbhjBQfFHfTjGWHsJV4xgrciIOglHPXijkWc5B5ldXCI5T9C9hGO+ivKAH1ZFw19qE7sYgPvKUCeX8Bxl4R5nJZ9m2oVea9JcaI+KUA37eMCM7EVpACplSfzrQM+AULROxk9XhFGAAAAAElFTkSuQmCC"
                       className="w-10 h-10"
+                      alt="imagecomida4"
                     />
                     <ChevronRight className="w-10 h-10"></ChevronRight>
                   </div>
