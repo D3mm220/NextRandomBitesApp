@@ -42,8 +42,9 @@ const Find = ({ user }: { user: User | null }) => {
   useEffect(() => {
     const bringLocation = async () => {
       const dataLocation = await axios.post("/api/location");
-      setLocation(dataLocation.data);
       console.log(dataLocation.data);
+      setLocation(dataLocation.data);
+      //console.log(dataLocation.data);
     };
     bringLocation();
   }, []);
@@ -58,15 +59,22 @@ const Find = ({ user }: { user: User | null }) => {
           },
         });
         //const dataNearby = await axios.get(location);
-        setPlaces(dataNearby.data.results);
-        setCurrentPlace(dataNearby.data.results[0]);
-        setCurrentId(dataNearby.data.results[0].place_id);
+
+        setPlaces(dataNearby.data.data.results);
+        setCurrentPlace(dataNearby.data.data.results[0]);
+        setCurrentId(dataNearby.data.data.results[0].place_id);
+        while (places.length === 0) {
+          setPlaces(dataNearby.data.data.results);
+          setCurrentPlace(dataNearby.data.data.results[0]);
+          setCurrentId(dataNearby.data.data.results[0].place_id);
+        }
+        console.log(places.length);
       };
       bringNearbySearch();
     }
   }, [location]);
 
-  console.log(location);
+  // console.log(location);
 
   useEffect(() => {
     if (places.length > 0) {
@@ -128,7 +136,7 @@ const Find = ({ user }: { user: User | null }) => {
   useEffect(() => {
     if (indexPhoto >= 0 && indexPhoto < photos.length) {
       setCurrentPhoto(photos[indexPhoto].photo_reference);
-      console.log("Corrio iteracion index photo");
+      //console.log("Corrio iteracion index photo");
     }
   }, [indexPhoto, photos]);
 
