@@ -43,7 +43,7 @@ const Find = ({ user }: { user: User | null }) => {
   //console.log("🚀CurrentPlace actual: ", currentPlace);
   //console.log("🚀posicion del lugar que estamos:", index);
   // console.log("🚀 id de la posicion actual:", currentId);
-  //console.log("🚀placeId de la posicion actual:", currentPlaceId);
+  console.log("🚀placeId de la posicion actual:", currentPlaceId);
   //console.log("🚀Cantidad de fotos", photos);
   // console.log("🚀Posicion de la foto:", indexPhoto);
   //console.log("🚀Foto actual:", currentPhoto);

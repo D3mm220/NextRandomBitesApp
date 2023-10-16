@@ -94,7 +94,10 @@ export const Card = (props: {
         </div>
 
         <p className="DirectionText justify-center text-center items-center text-3xl font-black pt-3 pb-3">
-          Direction: {currentPlaceId.formatted_address}
+          Direction: {currentPlaceId.address_components[1].long_name}{" "}
+          {currentPlaceId.address_components[0].long_name},{" "}
+          {currentPlaceId.address_components[3].long_name},{" "}
+          {currentPlaceId.address_components[4].long_name}
         </p>
         {fetchedPhoto && (
           <div className="Buttons flex flex-col lg:h-[100px] flex-wrap justify-center items-center">

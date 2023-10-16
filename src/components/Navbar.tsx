@@ -16,7 +16,7 @@ export const Navbar = async () => {
   //console.log(typeof user);
   return (
     <>
-      <nav className="flex bg-[#ff0000c0] h-24  justify-between items-center px-10 text-black font-semibold border-b-2 border-black">
+      <nav className="flex bg-[#ff0000c0] h-24 w-auto justify-between items-center px-10 text-black font-semibold border-b-2 border-black">
         <div className="left-side">
           <Link href="/">
             <Image
