@@ -39,17 +39,17 @@ const Find = ({ user }: { user: User | null }) => {
     width: 100, // Cambia este ancho según tus necesidades
   };
 
-  console.log("🚀Cantidad de lugares", places);
-  console.log("🚀CurrentPlace actual: ", currentPlace);
-  console.log("🚀posicion del lugar que estamos:", index);
+  //console.log("🚀Cantidad de lugares", places);
+  //console.log("🚀CurrentPlace actual: ", currentPlace);
+  //console.log("🚀posicion del lugar que estamos:", index);
   // console.log("🚀 id de la posicion actual:", currentId);
-  console.log("🚀placeId de la posicion actual:", currentPlaceId);
-  console.log("🚀Cantidad de fotos", photos);
+  //console.log("🚀placeId de la posicion actual:", currentPlaceId);
+  //console.log("🚀Cantidad de fotos", photos);
   // console.log("🚀Posicion de la foto:", indexPhoto);
   //console.log("🚀Foto actual:", currentPhoto);
   //console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
   //odio todo
-  console.log(location);
+  //console.log(location);
 
   //trae las coordenadas
   // useEffect(() => {
@@ -85,7 +85,7 @@ const Find = ({ user }: { user: User | null }) => {
         });
         //const dataNearby = await axios.get(location);
         const AxiosData = dataNearby.data.data.results;
-        console.log(AxiosData);
+        //console.log(AxiosData);
         setPlaces(AxiosData);
         setCurrentPlace(AxiosData[0]);
         setCurrentId(AxiosData[0].place_id);
