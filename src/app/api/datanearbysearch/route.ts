@@ -11,5 +11,9 @@ export const GET = async (request: Request) => {
   console.log(apiNearbySearch);
   const response = await fetch(apiNearbySearch);
   const data: typesPlaces = await response.json();
-  return Response.json({ data });
+  return new Response(JSON.stringify({ data }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+  //return Response.json({ data });
 };
