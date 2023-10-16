@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { typesResult } from "@/src/types/typesPlaces";
 import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
-import { Location } from "@/src/types/typesGeolocation";
+import { Location, typesGeolocation } from "@/src/types/typesGeolocation";
 import { Card } from "@/src/components/Card";
 import { redirect } from "next/navigation";
 import { User } from "@supabase/supabase-js";
@@ -41,14 +41,26 @@ const Find = ({ user }: { user: User | null }) => {
   console.log(location);
 
   //trae las coordenadas
+  // useEffect(() => {
+  //   const bringLocation = async () => {
+  //     const dataLocation = await axios.post("/api/location");
+  //     console.log(dataLocation.data);
+  //     setLocation(dataLocation.data);
+  //     //console.log(dataLocation.data);
+  //   };
+  //   bringLocation();
+  // }, []);
+
   useEffect(() => {
-    const bringLocation = async () => {
-      const dataLocation = await axios.post("/api/location");
-      console.log(dataLocation.data);
-      setLocation(dataLocation.data);
-      //console.log(dataLocation.data);
+    const fetchLocation = async () => {
+      const apiLocation = `https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.NEXT_PUBLIC_API_KEY}`;
+      const response = await fetch(apiLocation, {
+        method: "POST",
+      });
+      const data: typesGeolocation = await response.json();
+      setLocation(data.location);
     };
-    bringLocation();
+    fetchLocation();
   }, []);
 
   //Trae
