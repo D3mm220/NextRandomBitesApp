@@ -16,7 +16,10 @@ export const SocialAuth = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo:
+          process.env.NODE_ENV === "production"
+            ? "https://random-bites.vercel.app/auth/callback"
+            : `${location.origin}/auth/callback`,
       },
     });
     if (error) {
@@ -31,7 +34,10 @@ export const SocialAuth = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo:
+          process.env.NODE_ENV === "production"
+            ? "https://random-bites.vercel.app/auth/callback"
+            : `${location.origin}/auth/callback`,
       },
     });
     if (error) {
