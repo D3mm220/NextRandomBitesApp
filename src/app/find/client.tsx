@@ -190,7 +190,6 @@ const Find = ({ user }: { user: User | null }) => {
     setLastAction("handleSiteAnterior");
     setPhotos([]);
     setCurrentPhoto("");
-    setFetchedPhoto("");
   };
 
   const handleSiteSiguiente = () => {
@@ -198,7 +197,6 @@ const Find = ({ user }: { user: User | null }) => {
     setLastAction("handleSiteSiguiente");
     setPhotos([]);
     setCurrentPhoto("");
-    setFetchedPhoto("");
   };
 
   return (
