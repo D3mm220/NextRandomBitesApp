@@ -49,7 +49,7 @@ export const LoginModal = () => {
     } else if (data.user) {
       setOpen(false);
       router.refresh();
-      toast.success("youre logged in mf", { theme: "colored" });
+      toast.success("you're logged In!", { theme: "colored" });
     }
   };
 

@@ -189,14 +189,12 @@ const Find = ({ user }: { user: User | null }) => {
     index > 0 && setIndex(index - 1);
     setLastAction("handleSiteAnterior");
     setPhotos([]);
-    setCurrentPhoto("");
   };
 
   const handleSiteSiguiente = () => {
     index < places.length - 1 && setIndex(index + 1);
     setLastAction("handleSiteSiguiente");
     setPhotos([]);
-    setCurrentPhoto("");
   };
 
   return (
