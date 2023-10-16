@@ -8,5 +8,9 @@ export const GET = async (request: Request) => {
   const response = await fetch(apiPlacePhoto);
   const data = await response.url;
   console.log("🚀 ~ file: route.ts:10 ~ GET ~ data:", data);
-  return Response.json(data);
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+  //return Response.json(data);
 };
