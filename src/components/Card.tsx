@@ -1,14 +1,13 @@
 import { Photo, placeIdResult } from "../types/typesPlaceId";
 import { typesResult } from "../types/typesPlaces";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-
 import { Button } from "@/src/components/ui/button";
 
 export const Card = (props: {
   currentPlace: typesResult;
   currentPlaceId: placeIdResult;
-  fetchedPhoto: string;
+  fetchedPhoto: string | StaticImageData;
   index: number;
   handleSiteAnterior: () => void;
   handleSiteSiguiente: () => void;
@@ -60,13 +59,17 @@ export const Card = (props: {
             </Button>
           )}
           <div className="backgroundImage flex relative bg-black justify-center items-center w-[350px] h-[400px] sm:w-[600px] md:h-[600px] md:w-[750px] lg:w-[1200px] lg:h-[600px]  rounded-3xl">
-            <Image
-              src={fetchedPhoto ? fetchedPhoto : "/public/photodefault.webp"}
-              alt={fetchedPhoto}
-              fill={true}
-              objectFit={"contain"}
-              className="rounded-3xl"
-            />
+            {fetchedPhoto && (
+              <>
+                <Image
+                  src={fetchedPhoto}
+                  alt={fetchedPhoto.toString()}
+                  fill={true}
+                  objectFit={"contain"}
+                  className="rounded-3xl"
+                />
+              </>
+            )}
           </div>
           {indexPhoto < photos.length - 1 ? (
             <Button

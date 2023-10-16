@@ -2,7 +2,7 @@
 
 module.exports = {
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    domains: ["lh3.googleusercontent.com", "maps.googleapis.com"],
     formats: ["image/avif", "image/webp"],
   },
 };

@@ -6,10 +6,11 @@ export const POST = async () => {
     method: "POST",
   });
   const data: typesGeolocation = await response.json();
-  console.log(data.location);
   //return Response.json(data.location);
   return new Response(JSON.stringify(data.location), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
 };
+
+// no se usaaaa

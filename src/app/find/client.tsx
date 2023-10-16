@@ -8,6 +8,8 @@ import { Location, typesGeolocation } from "@/src/types/typesGeolocation";
 import { Card } from "@/src/components/Card";
 import { redirect } from "next/navigation";
 import { User } from "@supabase/supabase-js";
+import RandomBites from "@/public/RandomBites.jpeg";
+import { StaticImageData } from "next/image";
 
 const Find = ({ user }: { user: User | null }) => {
   if (!user) {
@@ -24,9 +26,18 @@ const Find = ({ user }: { user: User | null }) => {
   const [photos, setPhotos] = useState<Photo[]>([]); // ARRAY OF Photos
   const [indexPhoto, setIndexPhoto] = useState<number>(0);
   const [currentPhoto, setCurrentPhoto] = useState<string>("");
-  const [fetchedPhoto, setFetchedPhoto] = useState<string>("");
+  const [fetchedPhoto, setFetchedPhoto] = useState<StaticImageData | string>(
+    ""
+  );
   const [location, setLocation] = useState<Location>(); // Coordenadas del usuario
   const [lastAction, setLastAction] = useState("");
+
+  const defaultPhoto: Photo = {
+    height: 100, // Cambia esta altura según tus necesidades
+    html_attributions: [], // Puedes dejarlo vacío si no tienes atribuciones
+    photo_reference: "/public/photodefault.webp", // Ruta de la imagen predeterminada
+    width: 100, // Cambia este ancho según tus necesidades
+  };
 
   console.log("🚀Cantidad de lugares", places);
   console.log("🚀CurrentPlace actual: ", currentPlace);
@@ -100,43 +111,49 @@ const Find = ({ user }: { user: User | null }) => {
       });
       //const data = await getDataPlaceId(currentId);
       if (data.data.result?.photos === undefined) {
-        if (lastAction === "handleSiteAnterior" && index > 0) {
-          // Actualiza el estado después de verificar las condiciones
-          setLastAction("handleSiteAnterior");
-          setIndex(index - 1);
-        } else if (
-          lastAction === "handleSiteSiguiente" &&
-          index < places.length - 1
-        ) {
-          setIndex(index + 1);
-          setLastAction("handleSiteSiguiente");
-        } else if (
-          lastAction === "handleSiteSiguiente" &&
-          index === places.length
-        ) {
-          console.log("b");
-          const newArray = [...places];
-          newArray.pop();
-          setPlaces(newArray);
-          setLastAction("handleSiteAnterior");
-          setIndex(index - 1);
-        } else if (
-          lastAction === "handleSiteAnterior" &&
-          index < places.length - 1
-        ) {
-          setIndex(index - 1);
-          setLastAction("handleSiteAnterior");
-        }
-
+        setFetchedPhoto(RandomBites);
+        // if (lastAction === "handleSiteAnterior" && index > 0) {
+        //   // Actualiza el estado después de verificar las condiciones
+        //   const newArray = [...places];
+        //   newArray.splice(index, 1);
+        //   setPlaces(newArray);
+        //   setLastAction("handleSiteAnterior");
+        //   setIndex(index - 1);
+        // } else if (
+        //   lastAction === "handleSiteSiguiente" &&
+        //   index < places.length - 1
+        // ) {
+        //   const newArray = [...places];
+        //   newArray.splice(index, 1);
+        //   setPlaces(newArray);
+        //   setLastAction("handleSiteSiguiente");
+        //   setIndex(index + 1);
+        // } else if (
+        //   lastAction === "handleSiteSiguiente" &&
+        //   index === places.length
+        // ) {
+        //   const newArray = [...places];
+        //   newArray.pop();
+        //   setPlaces(newArray);
+        //   setLastAction("handleSiteAnterior");
+        //   setIndex(index - 1);
+        // } else if (
+        //   lastAction === "handleSiteAnterior" &&
+        //   index < places.length - 1
+        // ) {
+        //   setLastAction("handleSiteAnterior");
+        //   setIndex(index - 1);
+        // }
         return; // Sal de la función para evitar más actualizaciones innecesarias
+      } else {
+        setCurrentPlaceId(data.data.result);
+        setPhotos(data.data.result.photos);
+        setCurrentPhoto(data.data.result.photos[0].photo_reference);
+        setIndexPhoto(0);
       }
-      setCurrentPlaceId(data.data.result);
-      setPhotos(data.data.result.photos);
-      setCurrentPhoto(data.data.result.photos[0].photo_reference);
-      setIndexPhoto(0);
     };
     currentId !== "" && bringPLaceId();
-  }, [currentId, index, lastAction, places]);
+  }, [currentId, index, places]);
 
   useEffect(() => {
     const bringPhoto = async () => {
@@ -171,11 +188,17 @@ const Find = ({ user }: { user: User | null }) => {
   const handleSiteAnterior = () => {
     index > 0 && setIndex(index - 1);
     setLastAction("handleSiteAnterior");
+    setPhotos([]);
+    setCurrentPhoto("");
+    setFetchedPhoto("");
   };
 
   const handleSiteSiguiente = () => {
     index < places.length - 1 && setIndex(index + 1);
     setLastAction("handleSiteSiguiente");
+    setPhotos([]);
+    setCurrentPhoto("");
+    setFetchedPhoto("");
   };
 
   return (
