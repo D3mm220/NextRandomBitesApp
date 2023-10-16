@@ -28,15 +28,15 @@ const Find = ({ user }: { user: User | null }) => {
   const [location, setLocation] = useState<Location>(); // Coordenadas del usuario
   const [lastAction, setLastAction] = useState("");
 
-  // console.log("🚀Cantidad de lugares", places);
-  // console.log("🚀CurrentPlace actual: ", currentPlace);
-  // console.log("🚀posicion del lugar que estamos:", index);
+  console.log("🚀Cantidad de lugares", places);
+  console.log("🚀CurrentPlace actual: ", currentPlace);
+  console.log("🚀posicion del lugar que estamos:", index);
   // console.log("🚀 id de la posicion actual:", currentId);
-  // console.log("🚀placeId de la posicion actual:", currentPlaceId);
-  // console.log("🚀Cantidad de fotos", photos);
+  console.log("🚀placeId de la posicion actual:", currentPlaceId);
+  console.log("🚀Cantidad de fotos", photos);
   // console.log("🚀Posicion de la foto:", indexPhoto);
-  // console.log("🚀Foto actual:", currentPhoto);
-  // console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
+  console.log("🚀Foto actual:", currentPhoto);
+  console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
   //odio todo
 
   //trae las coordenadas
@@ -87,25 +87,35 @@ const Find = ({ user }: { user: User | null }) => {
       });
       //const data = await getDataPlaceId(currentId);
       if (data.data.result?.photos === undefined) {
-        if (lastAction === "handleSiteAnterior") {
-          const uptadesPlaces = [...places];
-          uptadesPlaces.splice(index, 1);
-          setPlaces(uptadesPlaces);
+        if (lastAction === "handleSiteAnterior" && index > 0) {
+          // Actualiza el estado después de verificar las condiciones
+          setLastAction("handleSiteAnterior");
           setIndex(index - 1);
-        } else if (lastAction === "handleSiteSiguiente") {
-          if (index === places.length) {
-            const updatedPlaces = [...places];
-            updatedPlaces.splice(index, 1);
-            setPlaces(updatedPlaces);
-            setIndex(index - 1);
-          } else {
-            const updatedPlaces = [...places];
-            updatedPlaces.splice(index, 1);
-            setPlaces(updatedPlaces);
-            setIndex(index + 1);
-          }
+        } else if (
+          lastAction === "handleSiteSiguiente" &&
+          index < places.length - 1
+        ) {
+          setIndex(index + 1);
+          setLastAction("handleSiteSiguiente");
+        } else if (
+          lastAction === "handleSiteSiguiente" &&
+          index === places.length
+        ) {
+          console.log("b");
+          const newArray = [...places];
+          newArray.pop();
+          setPlaces(newArray);
+          setLastAction("handleSiteAnterior");
+          setIndex(index - 1);
+        } else if (
+          lastAction === "handleSiteAnterior" &&
+          index < places.length - 1
+        ) {
+          setIndex(index - 1);
+          setLastAction("handleSiteAnterior");
         }
-        return; // Sale de la función para evitar más actualizaciones innecesarias
+
+        return; // Sal de la función para evitar más actualizaciones innecesarias
       }
       setCurrentPlaceId(data.data.result);
       setPhotos(data.data.result.photos);
