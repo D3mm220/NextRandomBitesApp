@@ -35,9 +35,10 @@ const Find = ({ user }: { user: User | null }) => {
   console.log("🚀placeId de la posicion actual:", currentPlaceId);
   console.log("🚀Cantidad de fotos", photos);
   // console.log("🚀Posicion de la foto:", indexPhoto);
-  console.log("🚀Foto actual:", currentPhoto);
-  console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
+  //console.log("🚀Foto actual:", currentPhoto);
+  //console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
   //odio todo
+  console.log(location);
 
   //trae las coordenadas
   useEffect(() => {
