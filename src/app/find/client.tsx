@@ -200,7 +200,7 @@ const Find = ({ user }: { user: User | null }) => {
 
   return (
     <>
-      {currentPlace && currentPlaceId && (
+      {currentPlace && currentPlaceId && fetchedPhoto && (
         <Card
           currentPlace={currentPlace}
           currentPlaceId={currentPlaceId}
