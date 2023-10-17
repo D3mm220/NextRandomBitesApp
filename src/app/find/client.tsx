@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import RandomBites from "@/public/RandomBites.jpeg";
 import { StaticImageData } from "next/image";
+import { toast } from "react-toastify";
 
 const Find = ({ user }: { user: User | null }) => {
   if (!user) {

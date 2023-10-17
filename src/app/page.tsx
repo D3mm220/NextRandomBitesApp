@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Toast from "../components/Toast";
+import { Button } from "../components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,8 +19,14 @@ export default function Home() {
             height={300}
           />
         </div>
+        <div className="flex justify-center flex-row items-center pt-20">
+          <Link href="/find">
+            <Button className="w-60 h-24 text-2xl">Find Places</Button>
+          </Link>
+        </div>
+
         <div>
-          <div className="p1 flex flex-col text-2xl lg:text-4xl md:text-3xl p-10 lg:p-40 text-center text-black">
+          <div className="p1 flex flex-col text-2xl lg:text-4xl md:text-3xl p-10 lg:p-32 text-center text-black">
             Random Bites nació con el propósito de ayudar a las personas a
             encontrar un nuevo restaurante/ establecimiento de comida de la
             manera más fácil posible, pensado para muchos tipos de usuario que
