@@ -16,8 +16,8 @@ export const Navbar = async () => {
   //console.log(typeof user);
   return (
     <>
-      <nav className="flex bg-[#ff0000c0] h-24 w-auto justify-between items-center px-10 text-black font-semibold border-b-2 border-black">
-        <div className="left-side">
+      <nav className="flex bg-[#ff0000c0] h-20 sm:h-24 w-screen p-8 justify-between items-center text-black font-semibold border-b-2 border-black">
+        <div className="left-side px-1 sm:px-3">
           <Link href="/">
             <Image
               src="/RandomBites.svg"
@@ -27,7 +27,7 @@ export const Navbar = async () => {
             />
           </Link>
         </div>
-        <div className="right-side flex gap-10">
+        <div className="right-side flex gap-2 sm:gap-10 justify-around">
           <Link
             href="/"
             className="text-2xl hover:bg-red-600  hover:font-bold rounded-xl"

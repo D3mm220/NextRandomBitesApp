@@ -3,13 +3,13 @@ import Toast from "../components/Toast";
 
 export default function Home() {
   return (
-    <>
-      <div className=" text-black flex flex-col bg-gray-300">
-        <h1 className="text-6xl flex justify-center pt-6 pb-4 font-serif font-semibold">
+    <div className=" w-screen overflow-hidden">
+      <div className=" text-black flex flex-col bg-gray-300 ">
+        <h1 className="text-6xl flex justify-center items-center text-center pt-6 pb-4 font-serif font-semibold">
           Random Bites
         </h1>
 
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center overflow-x-hidden">
           <Image
             src="/RandomBites.svg"
             alt="Random Bites logo"
@@ -58,6 +58,6 @@ export default function Home() {
         </div>
       </div>
       <Toast />
-    </>
+    </div>
   );
 }

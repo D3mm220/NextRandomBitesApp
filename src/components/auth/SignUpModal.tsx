@@ -72,14 +72,14 @@ export const SignUpModal = () => {
             className="text-2xl hover:bg-red-600 cursor-pointer rounded-xl hover:font-bold"
             onClick={() => setOpen(true)}
           >
-            SignUp
+            Signup
           </li>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle asChild>
               <div className="flex justify-between items-center">
-                <span>SignUp</span>
+                <span>Signup</span>
                 <X onClick={() => setOpen(false)} className="cursor-pointer" />
               </div>
             </AlertDialogTitle>

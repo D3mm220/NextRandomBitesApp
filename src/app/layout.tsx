@@ -19,11 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-300  min-h-screen overflow-x-hidden  ">
+      <body className="bg-gray-300 min-h-screen overflow-x-hidden">
         <Navbar />
 
         {children}
-        <p className="text-black text-lg lg:text-2xl pt-14 flex px-3">
+        <p className="text-black text-lg lg:text-2xl pt-14 flex p-10">
           All photos are taken from the official Google Maps API, Random Bites
           is not responsible for any photos that may appear, contact Google or
           the establishment to improve the quality of service. Random Bites all
