@@ -12,8 +12,7 @@ export const Navbar = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  //console.log("The session ", user);
-  //console.log(typeof user);
+
   return (
     <>
       <nav className="flex bg-[#ff0000c0] h-20 sm:h-24 w-screen p-8 justify-between items-center text-black font-semibold border-b-2 border-black">

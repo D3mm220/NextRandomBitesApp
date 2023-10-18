@@ -33,13 +33,6 @@ const Find = ({ user }: { user: User | null }) => {
   const [location, setLocation] = useState<Location>(); // Coordenadas del usuario
   const [lastAction, setLastAction] = useState("");
 
-  const defaultPhoto: Photo = {
-    height: 100, // Cambia esta altura según tus necesidades
-    html_attributions: [], // Puedes dejarlo vacío si no tienes atribuciones
-    photo_reference: "/public/photodefault.webp", // Ruta de la imagen predeterminada
-    width: 100, // Cambia este ancho según tus necesidades
-  };
-
   //console.log("🚀Cantidad de lugares", places);
   //console.log("🚀CurrentPlace actual: ", currentPlace);
   //console.log("🚀posicion del lugar que estamos:", index);
@@ -51,17 +44,6 @@ const Find = ({ user }: { user: User | null }) => {
   //console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
   //odio todo
   //console.log(location);
-
-  //trae las coordenadas
-  // useEffect(() => {
-  //   const bringLocation = async () => {
-  //     const dataLocation = await axios.post("/api/location");
-  //     console.log(dataLocation.data);
-  //     setLocation(dataLocation.data);
-  //     //console.log(dataLocation.data);
-  //   };
-  //   bringLocation();
-  // }, []);
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -84,9 +66,7 @@ const Find = ({ user }: { user: User | null }) => {
             location: location,
           },
         });
-        //const dataNearby = await axios.get(location);
         const AxiosData = dataNearby.data.data.results;
-        //console.log(AxiosData);
         setPlaces(AxiosData);
         setCurrentPlace(AxiosData[0]);
         setCurrentId(AxiosData[0].place_id);
@@ -94,7 +74,6 @@ const Find = ({ user }: { user: User | null }) => {
       bringNearbySearch();
     }
   }, [location]);
-  // console.log(location);
 
   useEffect(() => {
     if (places.length > 0) {
@@ -163,7 +142,6 @@ const Find = ({ user }: { user: User | null }) => {
           currentPhoto: currentPhoto,
         },
       });
-      //const data = await getPlacePhoto(currentPhoto);
       setFetchedPhoto(data.data);
     };
     currentPhoto !== "" && bringPhoto();
@@ -174,7 +152,6 @@ const Find = ({ user }: { user: User | null }) => {
   useEffect(() => {
     if (indexPhoto >= 0 && indexPhoto < photos.length) {
       setCurrentPhoto(photos[indexPhoto].photo_reference);
-      //console.log("Corrio iteracion index photo");
     }
   }, [indexPhoto, photos]);
 
