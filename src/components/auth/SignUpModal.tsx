@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -25,8 +25,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { SocialAuth } from "./SocialAuth";
+import { AccountContext } from "@/src/contexts/AccountContext";
 
 export const SignUpModal = () => {
+  const { openSignup, setOpenSignup } = useContext(AccountContext);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const supabase = createClientComponentClient();
@@ -57,7 +59,7 @@ export const SignUpModal = () => {
         email: payload.email,
         password: payload.password,
       });
-      setOpen(false);
+      setOpenSignup(false);
       toast.success("Logged In successfully", { theme: "colored" });
       router.refresh();
     }
@@ -66,11 +68,11 @@ export const SignUpModal = () => {
   return (
     <>
       <ToastContainer />
-      <AlertDialog open={open}>
+      <AlertDialog open={openSignup}>
         <AlertDialogTrigger asChild>
           <li
             className="text-2xl hover:bg-red-600 cursor-pointer rounded-xl hover:font-bold"
-            onClick={() => setOpen(true)}
+            onClick={() => setOpenSignup(true)}
           >
             Signup
           </li>
@@ -80,7 +82,10 @@ export const SignUpModal = () => {
             <AlertDialogTitle asChild>
               <div className="flex justify-between items-center">
                 <span>Signup</span>
-                <X onClick={() => setOpen(false)} className="cursor-pointer" />
+                <X
+                  onClick={() => setOpenSignup(false)}
+                  className="cursor-pointer"
+                />
               </div>
             </AlertDialogTitle>
             <AlertDialogDescription asChild>

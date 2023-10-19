@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -26,10 +26,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { SocialAuth } from "./SocialAuth";
+import { AccountContext } from "@/src/contexts/AccountContext";
 
 export const LoginModal = () => {
+  const { openLogin, setOpenLogin } = useContext(AccountContext);
   const supabase = createClientComponentClient();
-  const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
   const {
     register,
@@ -47,7 +48,7 @@ export const LoginModal = () => {
     if (error) {
       toast.error(error.message, { theme: "colored" });
     } else if (data.user) {
-      setOpen(false);
+      setOpenLogin(false);
       router.refresh();
       toast.success("you're logged In!", { theme: "colored" });
     }
@@ -56,11 +57,11 @@ export const LoginModal = () => {
   return (
     <>
       <ToastContainer />
-      <AlertDialog open={open}>
+      <AlertDialog open={openLogin}>
         <AlertDialogTrigger asChild>
           <li
             className="text-2xl hover:bg-red-600 cursor-pointer rounded-xl hover:font-bold"
-            onClick={() => setOpen(true)}
+            onClick={() => setOpenLogin(true)}
           >
             Login
           </li>
@@ -70,7 +71,10 @@ export const LoginModal = () => {
             <AlertDialogTitle asChild>
               <div className="flex justify-between items-center">
                 <span>Login</span>
-                <X onClick={() => setOpen(false)} className="cursor-pointer" />
+                <X
+                  onClick={() => setOpenLogin(false)}
+                  className="cursor-pointer"
+                />
               </div>
             </AlertDialogTitle>
             <AlertDialogDescription asChild>
