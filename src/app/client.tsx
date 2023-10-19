@@ -4,8 +4,11 @@ import Toast from "../components/Toast";
 import { Button } from "../components/ui/button";
 import Link from "next/link";
 import { User } from "@supabase/supabase-js";
+import { useContext } from "react";
+import { AccountContext } from "../contexts/AccountContext";
 
 export default function Home({ user }: { user: User | null }) {
+  const { setOpenLogin } = useContext(AccountContext);
   return (
     <div className=" w-screen overflow-hidden">
       <div className=" text-black flex flex-col bg-gray-300 ">
@@ -24,10 +27,15 @@ export default function Home({ user }: { user: User | null }) {
         <div className="flex justify-center flex-row items-center pt-20">
           {user ? (
             <Link href={"/find"}>
-              <Button className="w-60 h-24 text-2xl">Find Places</Button>
+              <Button className="w-60 h-24 text-4xl">Find Places</Button>
             </Link>
           ) : (
-            <Button className="w-60 h-24 text-2xl">Login</Button>
+            <Button
+              className="w-60 h-24 text-4xl"
+              onClick={() => setOpenLogin(true)}
+            >
+              Login
+            </Button>
           )}
         </div>
 
