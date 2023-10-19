@@ -69,7 +69,6 @@ const Find = ({ user }: { user: User | null }) => {
     fetchLocation();
   }, []);
 
-  //Trae
   useEffect(() => {
     if (location !== undefined) {
       const bringNearbySearch = async () => {
@@ -79,13 +78,53 @@ const Find = ({ user }: { user: User | null }) => {
           },
         });
         const AxiosData = dataNearby.data.data.results;
-        setPlaces(AxiosData);
-        setCurrentPlace(AxiosData[0]);
-        setCurrentId(AxiosData[0].place_id);
+        setTempPlaces(AxiosData);
+        setTempCurrentPlace(AxiosData[0]);
+        setTempCurrentId(AxiosData[0].place_id);
       };
-      bringNearbySearch();
+
+      const bringPLaceId = async () => {
+        const data = await axios.get("/api/dataplaceid", {
+          params: {
+            tempCurrentId: tempCurrentId,
+          },
+        });
+        //const data = await getDataPlaceId(currentId);
+        if (data.data.result?.photos === undefined) {
+          setTempFetchedPhoto(RandomBites);
+          setTempIndexPhoto(0);
+        } else {
+          setTempCurrentPlaceId(data.data.result);
+          setTempPhotos(data.data.result.photos);
+          setTempCurrentPhoto(data.data.result.photos[0].photo_reference);
+          setTempIndexPhoto(0);
+        }
+      };
+
+      const bringPhoto = async () => {
+        const data = await axios.get("/api/placephoto", {
+          params: {
+            tempCurrentPhoto: tempCurrentPhoto,
+          },
+        });
+        setTempFetchedPhoto(data.data);
+      };
+
+      const promises = [bringNearbySearch(), bringPLaceId(), bringPhoto()];
+
+      Promise.all(promises).then(() => {
+        setPlaces(tempPlaces);
+        setCurrentPlace(tempCurrentPlace);
+        setCurrentId(tempCurrentId);
+        setFetchedPhoto(tempFetchedPhoto);
+        setIndexPhoto(tempIndexPhoto);
+        setCurrentPlaceId(currentPlaceId);
+        setPhotos(tempPhotos);
+        setCurrentPhoto(tempCurrentPhoto);
+        setIndexPhoto(tempIndexPhoto);
+      });
     }
-  }, [location]);
+  }, []);
 
   useEffect(() => {
     if (places.length > 0) {
@@ -93,41 +132,6 @@ const Find = ({ user }: { user: User | null }) => {
       setCurrentId(places[index]?.place_id);
     }
   }, [index, places]);
-
-  useEffect(() => {
-    const bringPLaceId = async () => {
-      const data = await axios.get("/api/dataplaceid", {
-        params: {
-          currentId: currentId,
-        },
-      });
-      //const data = await getDataPlaceId(currentId);
-      if (data.data.result?.photos === undefined) {
-        setFetchedPhoto(RandomBites);
-        return; // Sal de la función para evitar más actualizaciones innecesarias
-      } else {
-        setCurrentPlaceId(data.data.result);
-        setPhotos(data.data.result.photos);
-        setCurrentPhoto(data.data.result.photos[0].photo_reference);
-        setIndexPhoto(0);
-      }
-    };
-    currentId !== "" && bringPLaceId();
-  }, [currentId, index, places]);
-
-  useEffect(() => {
-    const bringPhoto = async () => {
-      const data = await axios.get("/api/placephoto", {
-        params: {
-          currentPhoto: currentPhoto,
-        },
-      });
-      setFetchedPhoto(data.data);
-    };
-    currentPhoto !== "" && bringPhoto();
-  }, [currentPhoto]);
-
-  console.log(fetchedPhoto);
 
   useEffect(() => {
     if (indexPhoto >= 0 && indexPhoto < photos.length) {

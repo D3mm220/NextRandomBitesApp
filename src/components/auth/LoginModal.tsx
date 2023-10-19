@@ -49,8 +49,8 @@ export const LoginModal = () => {
       toast.error(error.message, { theme: "colored" });
     } else if (data.user) {
       setOpenLogin(false);
-      router.refresh();
       toast.success("you're logged In!", { theme: "colored" });
+      router.refresh();
     }
   };
 
