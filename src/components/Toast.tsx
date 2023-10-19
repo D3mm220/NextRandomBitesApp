@@ -16,7 +16,6 @@ export default function Toast() {
         toastId: "success1",
       });
     }
-    //console.log(params);
   }, [params]);
 
   return (

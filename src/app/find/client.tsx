@@ -33,14 +33,26 @@ const Find = ({ user }: { user: User | null }) => {
   const [location, setLocation] = useState<Location>(); // Coordenadas del usuario
   const [lastAction, setLastAction] = useState("");
 
-  //console.log("🚀Cantidad de lugares", places);
+  const [tempPlaces, setTempPlaces] = useState<typesResult[]>([]); // Array de los lugares que devuelve getDataNearbySearch
+  const [tempCurrentPlace, setTempCurrentPlace] = useState<typesResult>(); // Objecto del CurrentPlace, parte del array de places
+  const [tempIndex, setTempIndex] = useState<number>(0); // Integer helper para la iteration del CurrentPlace
+  const [tempCurrentId, setTempCurrentId] = useState<string>(""); // ID del CurrentPlace
+  const [tempCurrentPlaceId, setTempCurrentPlaceId] = useState<placeIdResult>(); // ARRAY OF PLACE ID
+  const [tempPhotos, setTempPhotos] = useState<Photo[]>([]); // ARRAY OF Photos
+  const [tempIndexPhoto, setTempIndexPhoto] = useState<number>(0);
+  const [tempCurrentPhoto, setTempCurrentPhoto] = useState<string>("");
+  const [tempFetchedPhoto, setTempFetchedPhoto] = useState<
+    StaticImageData | string
+  >("");
+
+  console.log("🚀Cantidad de lugares", places);
   //console.log("🚀CurrentPlace actual: ", currentPlace);
   //console.log("🚀posicion del lugar que estamos:", index);
   // console.log("🚀 id de la posicion actual:", currentId);
   console.log("🚀placeId de la posicion actual:", currentPlaceId);
   //console.log("🚀Cantidad de fotos", photos);
   // console.log("🚀Posicion de la foto:", indexPhoto);
-  //console.log("🚀Foto actual:", currentPhoto);
+  console.log("🚀Foto actual:", currentPhoto);
   //console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
   //odio todo
   //console.log(location);
@@ -92,38 +104,6 @@ const Find = ({ user }: { user: User | null }) => {
       //const data = await getDataPlaceId(currentId);
       if (data.data.result?.photos === undefined) {
         setFetchedPhoto(RandomBites);
-        // if (lastAction === "handleSiteAnterior" && index > 0) {
-        //   // Actualiza el estado después de verificar las condiciones
-        //   const newArray = [...places];
-        //   newArray.splice(index, 1);
-        //   setPlaces(newArray);
-        //   setLastAction("handleSiteAnterior");
-        //   setIndex(index - 1);
-        // } else if (
-        //   lastAction === "handleSiteSiguiente" &&
-        //   index < places.length - 1
-        // ) {
-        //   const newArray = [...places];
-        //   newArray.splice(index, 1);
-        //   setPlaces(newArray);
-        //   setLastAction("handleSiteSiguiente");
-        //   setIndex(index + 1);
-        // } else if (
-        //   lastAction === "handleSiteSiguiente" &&
-        //   index === places.length
-        // ) {
-        //   const newArray = [...places];
-        //   newArray.pop();
-        //   setPlaces(newArray);
-        //   setLastAction("handleSiteAnterior");
-        //   setIndex(index - 1);
-        // } else if (
-        //   lastAction === "handleSiteAnterior" &&
-        //   index < places.length - 1
-        // ) {
-        //   setLastAction("handleSiteAnterior");
-        //   setIndex(index - 1);
-        // }
         return; // Sal de la función para evitar más actualizaciones innecesarias
       } else {
         setCurrentPlaceId(data.data.result);
