@@ -56,15 +56,17 @@ const Find = ({ user }: { user: User | null }) => {
   console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
   console.log(location);
 
-  //console.log("🚀Cantidad de lugares", tempPlaces);
-  // console.log("🚀CurrentPlace actual: ", tempCurrentPlace);
-  //console.log("🚀posicion del lugar que estamos:", tempIndex);
-  //console.log("🚀 id de la posicion actual:", tempCurrentId);
-  // console.log("🚀placeId de la posicion actual:", tempCurrentPlaceId);
-  //console.log("🚀Cantidad de fotos", tempPhotos);
-  //console.log("🚀Posicion de la foto:", tempIndexPhoto);
-  // console.log("🚀Foto actual:", tempCurrentPhoto);
-  //console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
+  console.log("🚀Temp places", tempPlaces);
+  console.log("🚀Temp CurrentPlace ", tempCurrentPlace);
+  console.log("🚀Temp Index", tempIndex);
+  console.log("🚀 Temp CurrentId", tempCurrentId);
+  console.log("🚀Temp Current Place ID", tempCurrentPlaceId);
+  console.log("🚀Temp photos", tempPhotos);
+  console.log("🚀Temp index Photo", tempIndexPhoto);
+  console.log("🚀Temp CurrentPhoto", tempCurrentPhoto);
+  console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
+
+  const [actualizacion, setActualizacion] = useState<number>(0);
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -78,50 +80,57 @@ const Find = ({ user }: { user: User | null }) => {
     fetchLocation();
   }, []);
 
-  const bringNearbySearch = async () => {
-    const dataNearby = await axios.get("/api/datanearbysearch", {
-      params: {
-        location: location,
-      },
-    });
-    const AxiosData = dataNearby.data.data.results;
-    setTempPlaces(AxiosData);
-    setTempCurrentPlace(AxiosData[0]);
-    setTempCurrentId(AxiosData[0]?.place_id);
-  };
-
-  const bringPlaceId = async () => {
-    const data = await axios.get("/api/dataplaceid", {
-      params: {
-        currentId: currentId,
-      },
-    });
-    //const data = await getDataPlaceId(currentId);
-    if (data.data.result?.photos === undefined) {
-      setTempFetchedPhoto(RandomBites);
-      return; // Sal de la función para evitar más actualizaciones innecesarias
-    } else {
-      setTempCurrentPlaceId(data.data.result);
-      setTempPhotos(data.data.result.photos);
-      setTempCurrentPhoto(data.data.result.photos[0].photo_reference);
-      setTempIndexPhoto(0);
-    }
-  };
-
-  const bringPhoto = async () => {
-    const data = await axios.get("/api/placephoto", {
-      params: {
-        tempCurrentPhoto: tempCurrentPhoto,
-      },
-    });
-    setTempFetchedPhoto(data.data);
-  };
-
   useEffect(() => {
-    if (location !== undefined) {
-      bringNearbySearch();
-    }
-  }, [location]);
+    const bringNearbySearch = async () => {
+      const dataNearby = await axios.get("/api/datanearbysearch", {
+        params: {
+          location: location,
+        },
+      });
+      const AxiosData = dataNearby.data.data.results;
+      setTempPlaces(AxiosData);
+      setTempCurrentPlace(AxiosData[0]);
+      console.log(AxiosData[0]);
+      setTempCurrentId(AxiosData[0].place_id);
+      console.log(AxiosData[0].place_id);
+
+      setActualizacion(actualizacion + 1);
+    };
+    bringNearbySearch();
+
+    const bringPlaceId = async () => {
+      const data = await axios.get("/api/dataplaceid", {
+        params: {
+          tempCurrentId: tempCurrentId,
+        },
+      });
+      //const data = await getDataPlaceId(currentId);
+      if (data.data.result?.photos === undefined) {
+        setTempFetchedPhoto(RandomBites);
+        setActualizacion(actualizacion + 1);
+        console.log(data.data.result);
+      } else {
+        setTempCurrentPlaceId(data.data.result);
+        console.log(data.data.result);
+        setTempPhotos(data.data.result.photos);
+        setTempCurrentPhoto(data.data.result.photos[0].photo_reference);
+        setTempIndexPhoto(0);
+        setActualizacion(actualizacion + 1);
+      }
+    };
+    bringPlaceId();
+
+    const bringPhoto = async () => {
+      const data = await axios.get("/api/placephoto", {
+        params: {
+          tempCurrentPhoto: tempCurrentPhoto,
+        },
+      });
+      setTempFetchedPhoto(data.data);
+      setActualizacion(actualizacion + 1);
+    };
+    bringPhoto();
+  }, [location, index]);
 
   useEffect(() => {
     if (places.length > 0) {
@@ -131,26 +140,12 @@ const Find = ({ user }: { user: User | null }) => {
   }, [index, places]);
 
   useEffect(() => {
-    currentId !== "" && bringPlaceId();
-  }, [currentId, index, places]);
-
-  useEffect(() => {
-    tempCurrentPhoto !== "" && bringPhoto();
-  }, [currentPhoto]);
-
-  useEffect(() => {
     if (indexPhoto >= 0 && indexPhoto < photos.length) {
       setCurrentPhoto(photos[indexPhoto].photo_reference);
     }
   }, [indexPhoto, photos]);
 
-  const allPromises = Promise.all([
-    bringNearbySearch(),
-    bringPlaceId(),
-    bringPhoto(),
-  ]);
-
-  allPromises.then(() => {
+  if (actualizacion === 3) {
     setPlaces(tempPlaces);
     setCurrentPlace(tempCurrentPlace);
     setCurrentId(tempCurrentId);
@@ -159,7 +154,8 @@ const Find = ({ user }: { user: User | null }) => {
     setPhotos(tempPhotos);
     setCurrentPhoto(tempCurrentPhoto);
     setIndexPhoto(tempIndexPhoto);
-  });
+    setActualizacion(0); // actual
+  }
 
   const handlePhotoAnterior = () => {
     indexPhoto > 0 && setIndexPhoto(indexPhoto - 1);
