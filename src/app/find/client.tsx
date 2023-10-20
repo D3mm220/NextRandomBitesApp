@@ -46,16 +46,25 @@ const Find = ({ user }: { user: User | null }) => {
   >("");
 
   console.log("🚀Cantidad de lugares", places);
-  //console.log("🚀CurrentPlace actual: ", currentPlace);
-  //console.log("🚀posicion del lugar que estamos:", index);
-  // console.log("🚀 id de la posicion actual:", currentId);
+  console.log("🚀CurrentPlace actual: ", currentPlace);
+  console.log("🚀posicion del lugar que estamos:", index);
+  console.log("🚀 id de la posicion actual:", currentId);
   console.log("🚀placeId de la posicion actual:", currentPlaceId);
-  //console.log("🚀Cantidad de fotos", photos);
-  // console.log("🚀Posicion de la foto:", indexPhoto);
+  console.log("🚀Cantidad de fotos", photos);
+  console.log("🚀Posicion de la foto:", indexPhoto);
   console.log("🚀Foto actual:", currentPhoto);
+  console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
+  console.log(location);
+
+  //console.log("🚀Cantidad de lugares", tempPlaces);
+  // console.log("🚀CurrentPlace actual: ", tempCurrentPlace);
+  //console.log("🚀posicion del lugar que estamos:", tempIndex);
+  //console.log("🚀 id de la posicion actual:", tempCurrentId);
+  // console.log("🚀placeId de la posicion actual:", tempCurrentPlaceId);
+  //console.log("🚀Cantidad de fotos", tempPhotos);
+  //console.log("🚀Posicion de la foto:", tempIndexPhoto);
+  // console.log("🚀Foto actual:", tempCurrentPhoto);
   //console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
-  //odio todo
-  //console.log(location);
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -69,62 +78,50 @@ const Find = ({ user }: { user: User | null }) => {
     fetchLocation();
   }, []);
 
+  const bringNearbySearch = async () => {
+    const dataNearby = await axios.get("/api/datanearbysearch", {
+      params: {
+        location: location,
+      },
+    });
+    const AxiosData = dataNearby.data.data.results;
+    setTempPlaces(AxiosData);
+    setTempCurrentPlace(AxiosData[0]);
+    setTempCurrentId(AxiosData[0]?.place_id);
+  };
+
+  const bringPlaceId = async () => {
+    const data = await axios.get("/api/dataplaceid", {
+      params: {
+        currentId: currentId,
+      },
+    });
+    //const data = await getDataPlaceId(currentId);
+    if (data.data.result?.photos === undefined) {
+      setTempFetchedPhoto(RandomBites);
+      return; // Sal de la función para evitar más actualizaciones innecesarias
+    } else {
+      setTempCurrentPlaceId(data.data.result);
+      setTempPhotos(data.data.result.photos);
+      setTempCurrentPhoto(data.data.result.photos[0].photo_reference);
+      setTempIndexPhoto(0);
+    }
+  };
+
+  const bringPhoto = async () => {
+    const data = await axios.get("/api/placephoto", {
+      params: {
+        tempCurrentPhoto: tempCurrentPhoto,
+      },
+    });
+    setTempFetchedPhoto(data.data);
+  };
+
   useEffect(() => {
     if (location !== undefined) {
-      const bringNearbySearch = async () => {
-        const dataNearby = await axios.get("/api/datanearbysearch", {
-          params: {
-            location: location,
-          },
-        });
-        const AxiosData = dataNearby.data.data.results;
-        setTempPlaces(AxiosData);
-        setTempCurrentPlace(AxiosData[0]);
-        setTempCurrentId(AxiosData[0].place_id);
-      };
-
-      const bringPLaceId = async () => {
-        const data = await axios.get("/api/dataplaceid", {
-          params: {
-            tempCurrentId: tempCurrentId,
-          },
-        });
-        //const data = await getDataPlaceId(currentId);
-        if (data.data.result?.photos === undefined) {
-          setTempFetchedPhoto(RandomBites);
-          setTempIndexPhoto(0);
-        } else {
-          setTempCurrentPlaceId(data.data.result);
-          setTempPhotos(data.data.result.photos);
-          setTempCurrentPhoto(data.data.result.photos[0].photo_reference);
-          setTempIndexPhoto(0);
-        }
-      };
-
-      const bringPhoto = async () => {
-        const data = await axios.get("/api/placephoto", {
-          params: {
-            tempCurrentPhoto: tempCurrentPhoto,
-          },
-        });
-        setTempFetchedPhoto(data.data);
-      };
-
-      const promises = [bringNearbySearch(), bringPLaceId(), bringPhoto()];
-
-      Promise.all(promises).then(() => {
-        setPlaces(tempPlaces);
-        setCurrentPlace(tempCurrentPlace);
-        setCurrentId(tempCurrentId);
-        setFetchedPhoto(tempFetchedPhoto);
-        setIndexPhoto(tempIndexPhoto);
-        setCurrentPlaceId(currentPlaceId);
-        setPhotos(tempPhotos);
-        setCurrentPhoto(tempCurrentPhoto);
-        setIndexPhoto(tempIndexPhoto);
-      });
+      bringNearbySearch();
     }
-  }, []);
+  }, [location]);
 
   useEffect(() => {
     if (places.length > 0) {
@@ -134,10 +131,35 @@ const Find = ({ user }: { user: User | null }) => {
   }, [index, places]);
 
   useEffect(() => {
+    currentId !== "" && bringPlaceId();
+  }, [currentId, index, places]);
+
+  useEffect(() => {
+    tempCurrentPhoto !== "" && bringPhoto();
+  }, [currentPhoto]);
+
+  useEffect(() => {
     if (indexPhoto >= 0 && indexPhoto < photos.length) {
       setCurrentPhoto(photos[indexPhoto].photo_reference);
     }
   }, [indexPhoto, photos]);
+
+  const allPromises = Promise.all([
+    bringNearbySearch(),
+    bringPlaceId(),
+    bringPhoto(),
+  ]);
+
+  allPromises.then(() => {
+    setPlaces(tempPlaces);
+    setCurrentPlace(tempCurrentPlace);
+    setCurrentId(tempCurrentId);
+    setFetchedPhoto(tempFetchedPhoto); //
+    setCurrentPlaceId(tempCurrentPlaceId);
+    setPhotos(tempPhotos);
+    setCurrentPhoto(tempCurrentPhoto);
+    setIndexPhoto(tempIndexPhoto);
+  });
 
   const handlePhotoAnterior = () => {
     indexPhoto > 0 && setIndexPhoto(indexPhoto - 1);
