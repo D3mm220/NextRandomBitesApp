@@ -46,7 +46,10 @@ const Find = ({ user }: { user: User | null }) => {
   const fetchedPhotoRef = useRef(fetchedPhoto);
   const currentPlaceRef = useRef(currentPlace);
 
-  console.log("🚀Cantidad de lugares", places);
+  console.log(indexPhoto);
+  console.log(index);
+
+  //console.log("🚀Cantidad de lugares", places);
   //console.log("🚀CurrentPlace actual: ", currentPlace);
   //console.log("🚀posicion del lugar que estamos:", index);
   // console.log("🚀 id de la posicion actual:", currentId);
@@ -80,10 +83,20 @@ const Find = ({ user }: { user: User | null }) => {
         });
         const AxiosData = dataNearby.data.data.results;
         setPlaces(AxiosData);
-        setCurrentPlace(AxiosData[0]);
         currentPlaceRef.current = AxiosData[0];
-        setCurrentId(AxiosData[0]?.place_id!);
+        setCurrentPlace(AxiosData[0]);
         currentIdRef.current = AxiosData[0]?.place_id!;
+        setCurrentId(AxiosData[0]?.place_id);
+
+        if (places.length > 0) {
+          setCurrentPlace(places[index]);
+          currentPlaceRef.current = places[index];
+
+          currentIdRef.current = AxiosData[index]?.place_id!;
+          setCurrentId(places[index]?.place_id!);
+        }
+
+        console.log(currentIdRef.current);
 
         if (currentIdRef.current) {
           const dataPlaceId = await axios.get("/api/dataplaceid", {
@@ -120,11 +133,6 @@ const Find = ({ user }: { user: User | null }) => {
               ${currentPlaceIdRef.current?.address_components[3]!.long_name}
               ${currentPlaceIdRef.current?.address_components[4]!.long_name}`;
 
-            console.log(currentPlaceId);
-            console.log("currentPlace:", currentPlace);
-            console.log("fetchedPhoto:", fetchedPhoto);
-            console.log("address:", address);
-
             setRandomCard({
               title: currentPlaceRef.current?.name!,
               photo: fetchedPhotoRef,
@@ -141,47 +149,24 @@ const Find = ({ user }: { user: User | null }) => {
     getData();
   }, [location, index]);
 
-  console.log(currentPlaceId?.address_components[1].long_name);
-  console.log("🚀 ~ file: client.tsx:89 ~ bringData ~ setPlaces:", places);
-  console.log("🚀 ~ file: client.tsx:91 bringData CurrentPlace:", currentPlace);
-  console.log("🚀 ~ file: client.tsx:93 bringData CurrentId:", currentId);
-  console.log("🚀file client.tsx:112 bringData currentPlaceId", currentPlaceId);
-  console.log(fetchedPhoto);
-  console.log(randomCard);
+  console.log(currentIdRef.current);
 
-  const ChangeIndex = () => {
-    if (places.length >= 0 && index < photos.length) {
-      setCurrentPlace(places[index]);
-      setCurrentId(places[index].place_id);
-    }
+  const handlePhotoAnterior = () => {
+    indexPhoto > 0 && setIndexPhoto(indexPhoto - 1);
   };
 
-  const handleSiteSiguiente = () => {
-    index < places.length - 1 && setIndex(index + 1);
-    setLastAction("handleSiteSiguiente");
-    ChangeIndex();
+  const handlePhotoSiguiente = () => {
+    indexPhoto < photos.length - 1 && setIndexPhoto(indexPhoto + 1);
   };
 
   const handleSiteAnterior = () => {
     index > 0 && setIndex(index - 1);
     setLastAction("handleSiteAnterior");
-    ChangeIndex();
   };
 
-  const ChangeIndexPhoto = () => {
-    if (indexPhoto >= 0 && indexPhoto < photos.length) {
-      setCurrentPhoto(photos[indexPhoto].photo_reference);
-    }
-  };
-
-  const handlePhotoAnterior = () => {
-    indexPhoto > 0 && setIndexPhoto(indexPhoto - 1);
-    ChangeIndexPhoto();
-  };
-
-  const handlePhotoSiguiente = () => {
-    indexPhoto < photos.length - 1 && setIndexPhoto(indexPhoto + 1);
-    ChangeIndexPhoto();
+  const handleSiteSiguiente = () => {
+    index < places.length - 1 && setIndex(index + 1);
+    setLastAction("handleSiteSiguiente");
   };
 
   return (
