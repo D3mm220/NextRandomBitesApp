@@ -137,14 +137,26 @@ const Find = ({ user }: { user: User | null }) => {
               setFetchedPhoto(dataPhoto.data);
               fetchedPhotoRef.current = dataPhoto.data;
 
-              const address: string = `
-              ${currentPlaceIdRef.current?.address_components[1]!.long_name}
-              ${currentPlaceIdRef.current?.address_components[0]!.long_name}
-              ${currentPlaceIdRef.current?.address_components[3]!.long_name}
-              ${currentPlaceIdRef.current?.address_components[4]!.long_name}`;
+              const address: string = currentPlaceIdRef.current
+                ?.address_components[4]
+                ? `
+                  ${currentPlaceIdRef.current?.address_components[1]
+                    ?.long_name!}
+                  ${currentPlaceIdRef.current?.address_components[0]
+                    ?.long_name!}
+                  ${currentPlaceIdRef.current?.address_components[3]
+                    ?.long_name!}
+                  ${currentPlaceIdRef.current?.address_components[4]
+                    ?.long_name!}`
+                : `${currentPlaceIdRef.current?.formatted_address!}`;
+
+              console.log(currentPlaceIdRef.current?.name!);
+              console.log(currentPlaceRef.current?.name!);
 
               setRandomCard({
-                title: currentPlaceRef.current?.name!,
+                title:
+                  currentPlaceRef.current?.name! ||
+                  currentPlaceIdRef.current?.name!,
                 photo: fetchedPhotoRef,
                 direction: address,
               });
@@ -164,6 +176,9 @@ const Find = ({ user }: { user: User | null }) => {
   //console.log(currentPlaceRef.current);
   //console.log(currentId);
   //console.log(currentPlaceIdRef.current);
+  console.log(places);
+  console.log(currentPlace);
+  console.log(currentPlaceId);
 
   const handlePhotoAnterior = () => {
     indexPhoto > 0 && setIndexPhoto(indexPhoto - 1);
