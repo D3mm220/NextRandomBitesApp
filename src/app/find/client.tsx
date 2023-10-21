@@ -100,12 +100,15 @@ const Find = ({ user }: { user: User | null }) => {
             setFetchedPhoto(RandomBites);
           } else {
             setCurrentPlaceId(dataPlaceId.data.result);
+
             setPhotos(dataPlaceId.data.result.photos);
+
             setCurrentPhoto(dataPlaceId.data.result.photos[0].photo_reference);
+
             setIndexPhoto(0);
           }
 
-          if (currentPlaceId) {
+          if (currentPhoto) {
             const dataPhoto = await axios.get("/api/placephoto", {
               params: {
                 currentPhoto: currentPhoto,
@@ -134,6 +137,12 @@ const Find = ({ user }: { user: User | null }) => {
   console.log("🚀 ~ file: client.tsx:91 bringData CurrentPlace:", currentPlace);
   console.log("🚀 ~ file: client.tsx:93 bringData CurrentId:", currentId);
   console.log("🚀file client.tsx:112 bringData currentPlaceId", currentPlaceId);
+
+  console.log("🚀 ~ file: client.tsx:104 ~ getData ~ setPhotos:", photos);
+  console.log(
+    "🚀 ~ file: client.tsx:106 ~ getData ~ setCurrentPhoto:",
+    currentPhoto
+  );
   console.log(randomCard);
 
   const ChangeIndex = () => {
