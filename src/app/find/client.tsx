@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, MutableRefObject } from "react";
 import { typesResult } from "@/src/types/typesPlaces";
 import { Photo, placeIdResult } from "@/src/types/typesPlaceId";
 import { Location, typesGeolocation } from "@/src/types/typesGeolocation";
@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 
 export type CardType = {
   title: string;
-  photo: StaticImageData | string;
+  photo: MutableRefObject<string | StaticImageData>;
   direction: string;
 };
 
@@ -40,17 +40,11 @@ const Find = ({ user }: { user: User | null }) => {
   const [lastAction, setLastAction] = useState("");
   const [randomCard, setRandomCard] = useState<CardType>();
 
-  const [tempPlaces, setTempPlaces] = useState<typesResult[]>([]); // Array de los lugares que devuelve getDataNearbySearch
-  const [tempCurrentPlace, setTempCurrentPlace] = useState<typesResult>(); // Objecto del CurrentPlace, parte del array de places
-  const [tempIndex, setTempIndex] = useState<number>(0); // Integer helper para la iteration del CurrentPlace
-  const [tempCurrentId, setTempCurrentId] = useState<string>(""); // ID del CurrentPlace
-  const [tempCurrentPlaceId, setTempCurrentPlaceId] = useState<placeIdResult>(); // ARRAY OF PLACE ID
-  const [tempPhotos, setTempPhotos] = useState<Photo[]>([]); // ARRAY OF Photos
-  const [tempIndexPhoto, setTempIndexPhoto] = useState<number>(0);
-  const [tempCurrentPhoto, setTempCurrentPhoto] = useState<string>("");
-  const [tempFetchedPhoto, setTempFetchedPhoto] = useState<
-    StaticImageData | string
-  >("");
+  const currentIdRef = useRef(currentId);
+  const currentPhotoRef = useRef(currentPhoto);
+  const currentPlaceIdRef = useRef(currentPlaceId);
+  const fetchedPhotoRef = useRef(fetchedPhoto);
+  const currentPlaceRef = useRef(currentPlace);
 
   console.log("🚀Cantidad de lugares", places);
   //console.log("🚀CurrentPlace actual: ", currentPlace);
@@ -87,39 +81,53 @@ const Find = ({ user }: { user: User | null }) => {
         const AxiosData = dataNearby.data.data.results;
         setPlaces(AxiosData);
         setCurrentPlace(AxiosData[0]);
-        setCurrentId(AxiosData[0]?.place_id);
+        currentPlaceRef.current = AxiosData[0];
+        setCurrentId(AxiosData[0]?.place_id!);
+        currentIdRef.current = AxiosData[0]?.place_id!;
 
-        if (currentId) {
+        if (currentIdRef.current) {
           const dataPlaceId = await axios.get("/api/dataplaceid", {
             params: {
-              currentId: currentId,
+              currentId: currentIdRef.current,
             },
           });
 
           if (dataPlaceId.data.result?.photos === undefined) {
             setFetchedPhoto(RandomBites);
+            fetchedPhotoRef.current = RandomBites;
           } else {
             setCurrentPlaceId(dataPlaceId.data.result);
-
+            currentPlaceIdRef.current = dataPlaceId.data.result;
             setPhotos(dataPlaceId.data.result.photos);
-
             setCurrentPhoto(dataPlaceId.data.result.photos[0].photo_reference);
-
+            currentPhotoRef.current =
+              dataPlaceId.data.result.photos[0].photo_reference;
             setIndexPhoto(0);
           }
 
-          if (currentPhoto) {
+          if (currentPhotoRef.current) {
             const dataPhoto = await axios.get("/api/placephoto", {
               params: {
-                currentPhoto: currentPhoto,
+                currentPhoto: currentPhotoRef.current,
               },
             });
             setFetchedPhoto(dataPhoto.data);
+            fetchedPhotoRef.current = dataPhoto.data;
 
-            const address: string = `${currentPlaceId?.address_components[1].long_name} ${currentPlaceId?.address_components[0].long_name} ${currentPlaceId?.address_components[3].long_name} ${currentPlaceId?.address_components[4].long_name}`;
+            const address: string = `
+              ${currentPlaceIdRef.current?.address_components[1]!.long_name}
+              ${currentPlaceIdRef.current?.address_components[0]!.long_name}
+              ${currentPlaceIdRef.current?.address_components[3]!.long_name}
+              ${currentPlaceIdRef.current?.address_components[4]!.long_name}`;
+
+            console.log(currentPlaceId);
+            console.log("currentPlace:", currentPlace);
+            console.log("fetchedPhoto:", fetchedPhoto);
+            console.log("address:", address);
+
             setRandomCard({
-              title: currentPlace?.name!,
-              photo: fetchedPhoto!,
+              title: currentPlaceRef.current?.name!,
+              photo: fetchedPhotoRef,
               direction: address,
             });
           }
@@ -131,18 +139,14 @@ const Find = ({ user }: { user: User | null }) => {
     };
 
     getData();
-  }, [location, index, currentId, currentPhoto]);
+  }, [location, index]);
 
+  console.log(currentPlaceId?.address_components[1].long_name);
   console.log("🚀 ~ file: client.tsx:89 ~ bringData ~ setPlaces:", places);
   console.log("🚀 ~ file: client.tsx:91 bringData CurrentPlace:", currentPlace);
   console.log("🚀 ~ file: client.tsx:93 bringData CurrentId:", currentId);
   console.log("🚀file client.tsx:112 bringData currentPlaceId", currentPlaceId);
-
-  console.log("🚀 ~ file: client.tsx:104 ~ getData ~ setPhotos:", photos);
-  console.log(
-    "🚀 ~ file: client.tsx:106 ~ getData ~ setCurrentPhoto:",
-    currentPhoto
-  );
+  console.log(fetchedPhoto);
   console.log(randomCard);
 
   const ChangeIndex = () => {

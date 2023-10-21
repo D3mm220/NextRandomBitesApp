@@ -59,7 +59,7 @@ export const Card = (props: {
             {randomCard.photo && (
               <>
                 <Image
-                  src={randomCard.photo}
+                  src={randomCard.photo.current}
                   alt={randomCard.photo.toString()}
                   fill={true}
                   objectFit={"contain"}
