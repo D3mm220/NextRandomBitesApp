@@ -12,6 +12,12 @@ import RandomBites from "@/public/RandomBites.jpeg";
 import { StaticImageData } from "next/image";
 import { toast } from "react-toastify";
 
+export type CardType = {
+  title: string;
+  photo: StaticImageData | string;
+  direction: string;
+};
+
 const Find = ({ user }: { user: User | null }) => {
   if (!user) {
     redirect("/");
@@ -32,6 +38,7 @@ const Find = ({ user }: { user: User | null }) => {
   );
   const [location, setLocation] = useState<Location>(); // Coordenadas del usuario
   const [lastAction, setLastAction] = useState("");
+  const [randomCard, setRandomCard] = useState<CardType>();
 
   const [tempPlaces, setTempPlaces] = useState<typesResult[]>([]); // Array de los lugares que devuelve getDataNearbySearch
   const [tempCurrentPlace, setTempCurrentPlace] = useState<typesResult>(); // Objecto del CurrentPlace, parte del array de places
@@ -49,10 +56,10 @@ const Find = ({ user }: { user: User | null }) => {
   //console.log("🚀CurrentPlace actual: ", currentPlace);
   //console.log("🚀posicion del lugar que estamos:", index);
   // console.log("🚀 id de la posicion actual:", currentId);
-  console.log("🚀placeId de la posicion actual:", currentPlaceId);
+  //console.log("🚀placeId de la posicion actual:", currentPlaceId);
   //console.log("🚀Cantidad de fotos", photos);
   // console.log("🚀Posicion de la foto:", indexPhoto);
-  console.log("🚀Foto actual:", currentPhoto);
+  //console.log("🚀Foto actual:", currentPhoto);
   //console.log("🚀 ~ file: page.tsx:39 ~ Find ~ lastAction:", lastAction);
   //odio todo
   //console.log(location);
@@ -69,10 +76,9 @@ const Find = ({ user }: { user: User | null }) => {
     fetchLocation();
   }, []);
 
-  //Trae
   useEffect(() => {
-    if (location !== undefined) {
-      const bringNearbySearch = async () => {
+    const getData = async () => {
+      try {
         const dataNearby = await axios.get("/api/datanearbysearch", {
           params: {
             location: location,
@@ -81,95 +87,103 @@ const Find = ({ user }: { user: User | null }) => {
         const AxiosData = dataNearby.data.data.results;
         setPlaces(AxiosData);
         setCurrentPlace(AxiosData[0]);
-        setCurrentId(AxiosData[0].place_id);
-      };
-      bringNearbySearch();
-    }
-  }, [location]);
+        setCurrentId(AxiosData[0]?.place_id);
 
-  useEffect(() => {
-    if (places.length > 0) {
-      setCurrentPlace(places[index]);
-      setCurrentId(places[index]?.place_id);
-    }
-  }, [index, places]);
+        if (currentId) {
+          const dataPlaceId = await axios.get("/api/dataplaceid", {
+            params: {
+              currentId: currentId,
+            },
+          });
 
-  useEffect(() => {
-    const bringPLaceId = async () => {
-      const data = await axios.get("/api/dataplaceid", {
-        params: {
-          currentId: currentId,
-        },
-      });
-      //const data = await getDataPlaceId(currentId);
-      if (data.data.result?.photos === undefined) {
-        setFetchedPhoto(RandomBites);
-        return; // Sal de la función para evitar más actualizaciones innecesarias
-      } else {
-        setCurrentPlaceId(data.data.result);
-        setPhotos(data.data.result.photos);
-        setCurrentPhoto(data.data.result.photos[0].photo_reference);
-        setIndexPhoto(0);
+          if (dataPlaceId.data.result?.photos === undefined) {
+            setFetchedPhoto(RandomBites);
+          } else {
+            setCurrentPlaceId(dataPlaceId.data.result);
+            setPhotos(dataPlaceId.data.result.photos);
+            setCurrentPhoto(dataPlaceId.data.result.photos[0].photo_reference);
+            setIndexPhoto(0);
+          }
+
+          if (currentPlaceId) {
+            const dataPhoto = await axios.get("/api/placephoto", {
+              params: {
+                currentPhoto: currentPhoto,
+              },
+            });
+            setFetchedPhoto(dataPhoto.data);
+
+            const address: string = `${currentPlaceId?.address_components[1].long_name} ${currentPlaceId?.address_components[0].long_name} ${currentPlaceId?.address_components[3].long_name} ${currentPlaceId?.address_components[4].long_name}`;
+            setRandomCard({
+              title: currentPlace?.name!,
+              photo: fetchedPhoto!,
+              direction: address,
+            });
+          }
+        }
+      } catch (error) {
+        // Manejar errores de solicitud
+        console.error("Error en la solicitud: ", error);
       }
     };
-    currentId !== "" && bringPLaceId();
-  }, [currentId, index, places]);
 
-  useEffect(() => {
-    const bringPhoto = async () => {
-      const data = await axios.get("/api/placephoto", {
-        params: {
-          currentPhoto: currentPhoto,
-        },
-      });
-      setFetchedPhoto(data.data);
-    };
-    currentPhoto !== "" && bringPhoto();
-  }, [currentPhoto]);
+    getData();
+  }, [location, index, currentId, currentPhoto]);
 
-  console.log(fetchedPhoto);
+  console.log("🚀 ~ file: client.tsx:89 ~ bringData ~ setPlaces:", places);
+  console.log("🚀 ~ file: client.tsx:91 bringData CurrentPlace:", currentPlace);
+  console.log("🚀 ~ file: client.tsx:93 bringData CurrentId:", currentId);
+  console.log("🚀file client.tsx:112 bringData currentPlaceId", currentPlaceId);
+  console.log(randomCard);
 
-  useEffect(() => {
-    if (indexPhoto >= 0 && indexPhoto < photos.length) {
-      setCurrentPhoto(photos[indexPhoto].photo_reference);
+  const ChangeIndex = () => {
+    if (places.length >= 0 && index < photos.length) {
+      setCurrentPlace(places[index]);
+      setCurrentId(places[index].place_id);
     }
-  }, [indexPhoto, photos]);
-
-  const handlePhotoAnterior = () => {
-    indexPhoto > 0 && setIndexPhoto(indexPhoto - 1);
-  };
-
-  const handlePhotoSiguiente = () => {
-    indexPhoto < photos.length - 1 && setIndexPhoto(indexPhoto + 1);
-  };
-
-  const handleSiteAnterior = () => {
-    index > 0 && setIndex(index - 1);
-    setLastAction("handleSiteAnterior");
-    setPhotos([]);
   };
 
   const handleSiteSiguiente = () => {
     index < places.length - 1 && setIndex(index + 1);
     setLastAction("handleSiteSiguiente");
-    setPhotos([]);
+    ChangeIndex();
+  };
+
+  const handleSiteAnterior = () => {
+    index > 0 && setIndex(index - 1);
+    setLastAction("handleSiteAnterior");
+    ChangeIndex();
+  };
+
+  const ChangeIndexPhoto = () => {
+    if (indexPhoto >= 0 && indexPhoto < photos.length) {
+      setCurrentPhoto(photos[indexPhoto].photo_reference);
+    }
+  };
+
+  const handlePhotoAnterior = () => {
+    indexPhoto > 0 && setIndexPhoto(indexPhoto - 1);
+    ChangeIndexPhoto();
+  };
+
+  const handlePhotoSiguiente = () => {
+    indexPhoto < photos.length - 1 && setIndexPhoto(indexPhoto + 1);
+    ChangeIndexPhoto();
   };
 
   return (
     <>
-      {currentPlace && currentPlaceId && fetchedPhoto && (
+      {randomCard && (
         <Card
-          currentPlace={currentPlace}
-          currentPlaceId={currentPlaceId}
-          fetchedPhoto={fetchedPhoto}
+          randomCard={randomCard}
+          indexPhoto={indexPhoto}
+          places={places}
           index={index}
+          photos={photos}
           handleSiteAnterior={handleSiteAnterior}
           handleSiteSiguiente={handleSiteSiguiente}
           handlePhotoAnterior={handlePhotoAnterior}
           handlePhotoSiguiente={handlePhotoSiguiente}
-          places={places}
-          indexPhoto={indexPhoto}
-          photos={photos}
         />
       )}
     </>

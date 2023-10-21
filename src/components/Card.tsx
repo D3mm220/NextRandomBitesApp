@@ -3,11 +3,10 @@ import { typesResult } from "../types/typesPlaces";
 import Image, { StaticImageData } from "next/image";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
+import { CardType } from "../app/find/client";
 
 export const Card = (props: {
-  currentPlace: typesResult;
-  currentPlaceId: placeIdResult;
-  fetchedPhoto: string | StaticImageData;
+  randomCard: CardType;
   index: number;
   handleSiteAnterior: () => void;
   handleSiteSiguiente: () => void;
@@ -18,24 +17,22 @@ export const Card = (props: {
   photos: Photo[];
 }) => {
   const {
-    currentPlace,
-    currentPlaceId,
-    fetchedPhoto,
+    randomCard,
     index,
+    indexPhoto,
     handleSiteAnterior,
     handleSiteSiguiente,
     handlePhotoAnterior,
     handlePhotoSiguiente,
-    places,
-    indexPhoto,
     photos,
+    places,
   } = props;
 
   return (
     <div className="containerCard pt-1 lg:pt-5 flex flex-col justify-center items-center">
       <div className="ContainerCard flex flex-col">
         <p className="NamePlace justify-center text-center items-center text-5xl font-black pb-3">
-          Place: {currentPlace.name}
+          Place: {randomCard.title}
         </p>
         <div className="ContainerPhotos flex items-center justify-center">
           {indexPhoto > 0 ? (
@@ -59,11 +56,11 @@ export const Card = (props: {
             </Button>
           )}
           <div className="backgroundImage flex relative bg-black justify-center items-center w-[350px] h-[400px] sm:w-[600px] md:h-[600px] md:w-[750px] lg:w-[1200px] lg:h-[600px]  rounded-3xl">
-            {fetchedPhoto && (
+            {randomCard.photo && (
               <>
                 <Image
-                  src={fetchedPhoto}
-                  alt={fetchedPhoto.toString()}
+                  src={randomCard.photo}
+                  alt={randomCard.photo.toString()}
                   fill={true}
                   objectFit={"contain"}
                   className="rounded-3xl"
@@ -94,12 +91,9 @@ export const Card = (props: {
         </div>
 
         <p className="DirectionText justify-center text-center items-center text-3xl font-black pt-3 pb-3">
-          Direction: {currentPlaceId.address_components[1].long_name}{" "}
-          {currentPlaceId.address_components[0].long_name},{" "}
-          {currentPlaceId.address_components[3].long_name},{" "}
-          {currentPlaceId.address_components[4].long_name}
+          Direction: {randomCard.direction}
         </p>
-        {fetchedPhoto && (
+        {randomCard.photo && (
           <div className="Buttons flex flex-col lg:h-[100px] flex-wrap justify-center items-center">
             <div className="PictureButtons flex flex-row justify-between gap:10px"></div>
             <div className="PlaceButtons flex flex-row justify-between">
