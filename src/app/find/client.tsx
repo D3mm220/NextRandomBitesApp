@@ -45,6 +45,7 @@ const Find = ({ user }: { user: User | null }) => {
   const currentPlaceIdRef = useRef(currentPlaceId);
   const fetchedPhotoRef = useRef(fetchedPhoto);
   const currentPlaceRef = useRef(currentPlace);
+  const photosRef = useRef(photos);
 
   console.log(indexPhoto);
   console.log(index);
@@ -74,82 +75,95 @@ const Find = ({ user }: { user: User | null }) => {
   }, []);
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const dataNearby = await axios.get("/api/datanearbysearch", {
-          params: {
-            location: location,
-          },
-        });
-        const AxiosData = dataNearby.data.data.results;
-        setPlaces(AxiosData);
-        currentPlaceRef.current = AxiosData[0];
-        setCurrentPlace(AxiosData[0]);
-        currentIdRef.current = AxiosData[0]?.place_id!;
-        setCurrentId(AxiosData[0]?.place_id);
-
-        if (places.length > 0) {
-          setCurrentPlace(places[index]);
-          currentPlaceRef.current = places[index];
-
-          currentIdRef.current = AxiosData[index]?.place_id!;
-          setCurrentId(places[index]?.place_id!);
-        }
-
-        console.log(currentIdRef.current);
-
-        if (currentIdRef.current) {
-          const dataPlaceId = await axios.get("/api/dataplaceid", {
+    if (location) {
+      const getData = async () => {
+        try {
+          const dataNearby = await axios.get("/api/datanearbysearch", {
             params: {
-              currentId: currentIdRef.current,
+              location: location,
             },
           });
+          const AxiosData = dataNearby.data.data.results;
+          setPlaces(AxiosData);
+          currentPlaceRef.current = AxiosData[0];
+          setCurrentPlace(AxiosData[0]);
+          currentIdRef.current = AxiosData[0]?.place_id!;
+          setCurrentId(AxiosData[0]?.place_id);
 
-          if (dataPlaceId.data.result?.photos === undefined) {
-            setFetchedPhoto(RandomBites);
-            fetchedPhotoRef.current = RandomBites;
-          } else {
-            setCurrentPlaceId(dataPlaceId.data.result);
-            currentPlaceIdRef.current = dataPlaceId.data.result;
-            setPhotos(dataPlaceId.data.result.photos);
-            setCurrentPhoto(dataPlaceId.data.result.photos[0].photo_reference);
-            currentPhotoRef.current =
-              dataPlaceId.data.result.photos[0].photo_reference;
-            setIndexPhoto(0);
+          if (places.length > 0) {
+            setCurrentPlace(places[index]);
+            currentPlaceRef.current = places[index];
+
+            currentIdRef.current = AxiosData[index]?.place_id!;
+            setCurrentId(places[index]?.place_id!);
           }
 
-          if (currentPhotoRef.current) {
-            const dataPhoto = await axios.get("/api/placephoto", {
+          console.log(currentIdRef.current);
+
+          if (currentIdRef.current) {
+            const dataPlaceId = await axios.get("/api/dataplaceid", {
               params: {
-                currentPhoto: currentPhotoRef.current,
+                currentId: currentIdRef.current,
               },
             });
-            setFetchedPhoto(dataPhoto.data);
-            fetchedPhotoRef.current = dataPhoto.data;
 
-            const address: string = `
+            if (dataPlaceId.data.result?.photos === undefined) {
+              setFetchedPhoto(RandomBites);
+              fetchedPhotoRef.current = RandomBites;
+            } else {
+              setCurrentPlaceId(dataPlaceId.data.result);
+              currentPlaceIdRef.current = dataPlaceId.data.result;
+              setPhotos(dataPlaceId.data.result.photos);
+              photosRef.current = dataPlaceId.data.result.photos;
+              if (indexPhoto > 0 && indexPhoto < photosRef.current.length) {
+                currentPhotoRef.current =
+                  photosRef.current[indexPhoto].photo_reference;
+                setCurrentPhoto(photosRef.current[indexPhoto].photo_reference);
+              } else {
+                setCurrentPhoto(
+                  dataPlaceId.data.result.photos[0].photo_reference
+                );
+                currentPhotoRef.current =
+                  dataPlaceId.data.result.photos[0].photo_reference;
+              }
+            }
+
+            if (currentPhotoRef.current) {
+              const dataPhoto = await axios.get("/api/placephoto", {
+                params: {
+                  currentPhoto: currentPhotoRef.current,
+                },
+              });
+              setFetchedPhoto(dataPhoto.data);
+              fetchedPhotoRef.current = dataPhoto.data;
+
+              const address: string = `
               ${currentPlaceIdRef.current?.address_components[1]!.long_name}
               ${currentPlaceIdRef.current?.address_components[0]!.long_name}
               ${currentPlaceIdRef.current?.address_components[3]!.long_name}
               ${currentPlaceIdRef.current?.address_components[4]!.long_name}`;
 
-            setRandomCard({
-              title: currentPlaceRef.current?.name!,
-              photo: fetchedPhotoRef,
-              direction: address,
-            });
+              setRandomCard({
+                title: currentPlaceRef.current?.name!,
+                photo: fetchedPhotoRef,
+                direction: address,
+              });
+            }
           }
+        } catch (error) {
+          // Manejar errores de solicitud
+          console.error("Error en la solicitud: ", error);
         }
-      } catch (error) {
-        // Manejar errores de solicitud
-        console.error("Error en la solicitud: ", error);
-      }
-    };
+      };
 
-    getData();
-  }, [location, index]);
+      console.log("corrio getdata");
+      getData();
+    }
+  }, [location, index, indexPhoto]);
 
-  console.log(currentIdRef.current);
+  //console.log(currentPlaceRef.current);
+  //console.log(currentId);
+  //console.log(currentPlaceIdRef.current);
 
   const handlePhotoAnterior = () => {
     indexPhoto > 0 && setIndexPhoto(indexPhoto - 1);
@@ -162,10 +176,13 @@ const Find = ({ user }: { user: User | null }) => {
   const handleSiteAnterior = () => {
     index > 0 && setIndex(index - 1);
     setLastAction("handleSiteAnterior");
+    setIndexPhoto(0);
   };
 
   const handleSiteSiguiente = () => {
     index < places.length - 1 && setIndex(index + 1);
+    setIndexPhoto(0);
+
     setLastAction("handleSiteSiguiente");
   };
 
