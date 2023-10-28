@@ -212,9 +212,11 @@ const Find = ({ user }: { user: User | null }) => {
       {randomCard &&
         randomCard.photo &&
         (isLoading ? (
-          <Skeleton variant="text" width={300} height={100}>
-            <Avatar />
-          </Skeleton>
+          <div>
+            <Skeleton variant="text" width={300} height={70} />
+            <Skeleton variant="rounded" width={1200} height={600} />
+            <Skeleton variant="text" width={300} height={70} />
+          </div>
         ) : (
           <Card
             randomCard={randomCard}
