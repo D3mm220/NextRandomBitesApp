@@ -203,7 +203,7 @@ const Find = ({ user }: { user: User | null }) => {
 
   return (
     <>
-      {randomCard && (
+      {randomCard && randomCard.photo && (
         <Card
           randomCard={randomCard}
           indexPhoto={indexPhoto}
