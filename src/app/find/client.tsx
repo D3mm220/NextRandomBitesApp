@@ -10,7 +10,8 @@ import { redirect } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import RandomBites from "@/public/RandomBites.jpeg";
 import { StaticImageData } from "next/image";
-import { toast } from "react-toastify";
+import Avatar from "@mui/material/Avatar";
+import Skeleton from "@mui/material/Skeleton";
 
 export type CardType = {
   title: string;
@@ -47,6 +48,8 @@ const Find = ({ user }: { user: User | null }) => {
   const currentPlaceRef = useRef(currentPlace);
   const photosRef = useRef(photos);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   console.log(indexPhoto);
   console.log(index);
 
@@ -77,6 +80,7 @@ const Find = ({ user }: { user: User | null }) => {
   useEffect(() => {
     if (location) {
       const getData = async () => {
+        setIsLoading(true);
         try {
           const dataNearby = await axios.get("/api/datanearbysearch", {
             params: {
@@ -160,6 +164,8 @@ const Find = ({ user }: { user: User | null }) => {
                 photo: fetchedPhotoRef,
                 direction: address,
               });
+
+              setIsLoading(false);
             }
           }
         } catch (error) {
@@ -203,19 +209,25 @@ const Find = ({ user }: { user: User | null }) => {
 
   return (
     <>
-      {randomCard && randomCard.photo && (
-        <Card
-          randomCard={randomCard}
-          indexPhoto={indexPhoto}
-          places={places}
-          index={index}
-          photos={photos}
-          handleSiteAnterior={handleSiteAnterior}
-          handleSiteSiguiente={handleSiteSiguiente}
-          handlePhotoAnterior={handlePhotoAnterior}
-          handlePhotoSiguiente={handlePhotoSiguiente}
-        />
-      )}
+      {randomCard &&
+        randomCard.photo &&
+        (isLoading ? (
+          <Skeleton variant="text" width={300} height={100}>
+            <Avatar />
+          </Skeleton>
+        ) : (
+          <Card
+            randomCard={randomCard}
+            indexPhoto={indexPhoto}
+            places={places}
+            index={index}
+            photos={photos}
+            handleSiteAnterior={handleSiteAnterior}
+            handleSiteSiguiente={handleSiteSiguiente}
+            handlePhotoAnterior={handlePhotoAnterior}
+            handlePhotoSiguiente={handlePhotoSiguiente}
+          />
+        ))}
     </>
   );
 };
