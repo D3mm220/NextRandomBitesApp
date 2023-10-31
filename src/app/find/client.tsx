@@ -40,7 +40,7 @@ const Find = ({ user }: { user: User | null }) => {
   const [location, setLocation] = useState<Location>(); // Coordenadas del usuario
   const [lastAction, setLastAction] = useState("");
   const [randomCard, setRandomCard] = useState<CardType>();
-
+  //aaa
   const currentIdRef = useRef(currentId);
   const currentPhotoRef = useRef(currentPhoto);
   const currentPlaceIdRef = useRef(currentPlaceId);
