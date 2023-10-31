@@ -23,13 +23,14 @@ export const Navbar = async () => {
               alt="Random Bites Logo"
               width={80}
               height={80}
+              className="hover:scale-110"
             />
           </Link>
         </div>
-        <div className="right-side flex gap-2 sm:gap-10 justify-around">
+        <div className="right-side w-[500px] flex gap-2 sm:gap-10 justify-around">
           <Link
             href="/"
-            className="text-2xl hover:bg-red-600  hover:font-bold rounded-xl"
+            className="text-2xl hover:bg-red-600   rounded-xl hover:scale-110"
           >
             Home
           </Link>
@@ -37,7 +38,7 @@ export const Navbar = async () => {
             <>
               <Link
                 href="/find"
-                className="text-2xl  hover:bg-red-600 rounded-xl hover:font-bold"
+                className="text-2xl  hover:bg-red-600 rounded-xl  hover:scale-110 "
               >
                 Find
               </Link>

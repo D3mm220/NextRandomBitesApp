@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 import RandomBites from "@/public/RandomBites.jpeg";
 import { StaticImageData } from "next/image";
-import Avatar from "@mui/material/Avatar";
+import { toast } from "react-toastify";
 import Skeleton from "@mui/material/Skeleton";
 
 export type CardType = {
@@ -209,27 +209,25 @@ const Find = ({ user }: { user: User | null }) => {
 
   return (
     <>
-      {randomCard &&
-        randomCard.photo &&
-        (isLoading ? (
-          <div>
-            <Skeleton variant="text" width={300} height={70} />
-            <Skeleton variant="rounded" width={1200} height={600} />
-            <Skeleton variant="text" width={300} height={70} />
-          </div>
-        ) : (
-          <Card
-            randomCard={randomCard}
-            indexPhoto={indexPhoto}
-            places={places}
-            index={index}
-            photos={photos}
-            handleSiteAnterior={handleSiteAnterior}
-            handleSiteSiguiente={handleSiteSiguiente}
-            handlePhotoAnterior={handlePhotoAnterior}
-            handlePhotoSiguiente={handlePhotoSiguiente}
-          />
-        ))}
+      {randomCard && randomCard.photo ? (
+        <Card
+          randomCard={randomCard}
+          indexPhoto={indexPhoto}
+          places={places}
+          index={index}
+          photos={photos}
+          handleSiteAnterior={handleSiteAnterior}
+          handleSiteSiguiente={handleSiteSiguiente}
+          handlePhotoAnterior={handlePhotoAnterior}
+          handlePhotoSiguiente={handlePhotoSiguiente}
+        />
+      ) : (
+        <div className="containerCard h-[800px] pt-1 lg:pt-5 flex flex-col justify-center items-center">
+          <Skeleton variant="text" width={700} height={70} />
+          <Skeleton variant="text" width={1200} height={900} />
+          <Skeleton variant="text" width={900} height={70} />
+        </div>
+      )}
     </>
   );
 };

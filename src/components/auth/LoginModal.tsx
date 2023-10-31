@@ -49,8 +49,8 @@ export const LoginModal = () => {
       toast.error(error.message, { theme: "colored" });
     } else if (data.user) {
       setOpenLogin(false);
-      router.refresh();
       toast.success("you're logged In!", { theme: "colored" });
+      router.refresh();
     }
   };
 
@@ -60,7 +60,7 @@ export const LoginModal = () => {
       <AlertDialog open={openLogin}>
         <AlertDialogTrigger asChild>
           <li
-            className="text-2xl hover:bg-red-600 cursor-pointer rounded-xl hover:font-bold"
+            className="text-2xl hover:bg-red-600 cursor-pointer rounded-xl hover:scale-110"
             onClick={() => setOpenLogin(true)}
           >
             Login
