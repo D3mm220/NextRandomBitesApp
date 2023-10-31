@@ -141,18 +141,8 @@ const Find = ({ user }: { user: User | null }) => {
               setFetchedPhoto(dataPhoto.data);
               fetchedPhotoRef.current = dataPhoto.data;
 
-              const address: string = currentPlaceIdRef.current
-                ?.address_components[4]
-                ? `
-                  ${currentPlaceIdRef.current?.address_components[1]
-                    ?.long_name!}
-                  ${currentPlaceIdRef.current?.address_components[0]
-                    ?.long_name!}
-                  ${currentPlaceIdRef.current?.address_components[3]
-                    ?.long_name!}
-                  ${currentPlaceIdRef.current?.address_components[4]
-                    ?.long_name!}`
-                : `${currentPlaceIdRef.current?.formatted_address!}`;
+              const address: string =
+                currentPlaceIdRef.current?.formatted_address!;
 
               console.log(currentPlaceIdRef.current?.name!);
               console.log(currentPlaceRef.current?.name!);
